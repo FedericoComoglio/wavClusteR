@@ -1,0 +1,61 @@
+import(IRanges)
+import(rtracklayer)
+import(GenomicRanges)
+import(Biostrings)
+import(GenomicFeatures)
+
+importFrom(stringr, str_count)
+
+importFrom(mclust, Mclust)
+importFrom(mclust, mclustBIC)
+
+#importFrom(doMC, registerDoMC)
+importFrom(foreach, foreach)
+importFrom(foreach, "%dopar%")
+
+importFrom(ggplot2, ggplot)
+importFrom(ggplot2, aes)
+importFrom(ggplot2, geom_point)
+importFrom(ggplot2, facet_grid)
+importFrom(ggplot2, theme_bw)
+importFrom(ggplot2, labs)
+importFrom(ggplot2, theme)
+importFrom(ggplot2, element_text)
+importFrom(ggplot2, rel)
+importFrom(ggplot2, xlab)
+importFrom(ggplot2, ylab)
+importFrom(ggplot2, geom_smooth)
+
+importFrom(wmtsa, wavCWT)
+importFrom(wmtsa, wavCWTTree)
+
+importFrom(Hmisc, dotchart2)
+
+importFrom(seqinr, write.fasta)
+
+importFrom(Rsamtools, ScanBamParam)
+importFrom(Rsamtools, scanBam, scanBamFlag)
+
+export( 
+	readSortedBam,
+	getAllSub,
+	fitMixtureModel,
+	getExpInterval,
+	getHighConfSub,
+	getClusters,
+	filterClusters,
+	annotateClusters,
+	plotSizeDistribution,
+	plotStatistics,
+	getMetaGene,
+	getMetaTSS,
+	plotSubstitutions,
+	estimateFDR,
+	exportClusters,
+	exportHighConfSub,
+	exportCoverage,
+	exportSequences
+)
+
+
+

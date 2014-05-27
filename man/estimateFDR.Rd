@@ -1,0 +1,40 @@
+\name{estimateFDR}
+\alias{estimateFDR}
+\title{Estimate False Discovery Rate within the relative substitution frequency support by integrating PAR-CLIP data and RNA-Seq data}
+
+\description{Estimate upper and lower bounds for the False Discovery Rate within the relative substitution frequency (RSF) support by integrating PAR-CLIP data and RNA-Seq data (current version makes use of unstranded RNA-Seq)}
+
+\usage{estimateFDR(countTable, RNASeq, substitution = 'TC', minCov = 20, span = 0.1, cores = 1, plot = TRUE, verbose = TRUE, ...)}
+
+\arguments{
+  \item{countTable}{A GRanges object, corresponding to a count table as returned by the \link{getAllSub} function}
+  \item{RNASeq}{GRanges object containing aligned RNA-Seq reads as returned by \link{readSortedBam}}
+  \item{substitution}{A character indicating which substitution is induced by the experimental procedure (e.g. 4-SU treatment - a standard in PAR-CLIP experiments - induces T to C transitions and hence substitution = 'TC' in this case.)}
+  \item{minCov}{An integer defining the minimum coverage required at a genomic position exhibiting a substitution. Genomic positions of coverage less than \code{minCov} are discarded. Default is 20 (see Details).}
+  \item{span}{A numeric indicating the width of RSF intervals to be considered for FDR computation. Defauls is 0.1 (i.e. 10 intervals are considered spanning the RSF support (0,1]}
+  \item{cores}{An integer defining the number of cores to be used for parallel processing, if available. Default is 1.}
+  \item{plot}{Logical, if TRUE a dotchart with cluster annotations is produced}
+  \item{verbose}{Logical, if TRUE processing steps are printed}
+  \item{...}{Additional parameters to be passed to the \code{plot} function}
+}
+
+\details{For details on the FDR computation, please see Comoglio, Sievers and Paro.}
+
+\value{A list with three slots, containing upper and lower FDR bounds, and the total number of positive instances each RSF interval. If \code{plot}, these three vectors are depicted as a line plot.}
+
+\note{The approach used to compute the upper bound for the FDR is very conservative. See supplementary information in Comoglio et al. for details.}
+
+\references{
+ Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for PAR-CLIP data analysis, submitted
+}
+
+\author{
+Federico Comoglio and Cem Sievers
+}
+
+\seealso{
+\code{\link{readSortedBam}}, \code{\link{getAllSub}}
+}
+
+\keyword{core}
+\keyword{graphics}

@@ -1,0 +1,30 @@
+\name{wavClusteR-package}
+\alias{wavClusteR-package}
+\alias{wavClusteR}
+\docType{package}
+\title{An R package for the analysis of Next-Generation Sequencing data obtained from PAR-CLIP or other substitution-inducing experimental procedures.
+}
+\description{Infer PAR-CLIP induced transitions and discriminate them from sequencing error, SNPs, contaminants and additional non-experimental causes, using a non-parametric mixture model. wavClusteR resolves cluster boundaries at high resolution and provides robust estimation of cluster statistics. In addition, the package allows to integrate RNA-Seq data to estimate FDR over the entire range of relative substitution frequencies. Furthermore, the package provides post-processing of results and functions to export results for UCSC genome browser visualization and motif search analysis. Key functions support parallel multicore computing. While wavClusteR was designed for PAR-CLIP data analysis, it can be applied to the analysis of other Next-Generation Sequencing data obtained from substitution inducing experimental procedures (e.g. BisSeq)}
+\details{
+\tabular{ll}{
+Package: \tab wavClusteR\cr
+Type: \tab Package\cr
+Version: \tab 0.99.0\cr
+Date: \tab 2013-12-07\cr
+License: \tab GPL-2\cr
+}
+}
+\author{Federico Comoglio and Cem Sievers
+
+Epigenomics Group
+
+Department of Biosystems Science and Engineering (D-BSSE)
+
+ETH Zurich, Switzerland
+
+Maintainer: Federico Comoglio
+
+\email{federico.comoglio@bsse.ethz.ch}	 
+}
+
+\keyword{package}
