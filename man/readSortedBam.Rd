@@ -1,0 +1,35 @@
+\name{readSortedBam}
+\alias{readSortedBam}
+
+\title{Load a sorted BAM file}
+
+\description{Load a sorted BAM file. Optionally, only reads mapping to a specific set of genomics coordinates are loaded. Only fields strictly necessary to run a wavClusteR analysis are loaded.}
+
+\usage{readSortedBam(filename, which)}
+
+\arguments{
+  \item{filename}{Name of the sorted BAM file, including full path to file if it is located outside the current working directory.}
+  \item{which}{a GRanges, RangesList or RangedData specifying the regions on the reference sequence for which matches are desired. See the documentation of the \code{Rsamtools} package for details.}
+}
+
+\value{a GRanges object containing aligned reads, including read sequence (qseq) and MD tag (MD)}
+
+\references{
+Martin Morgan and Herve Pages, Rsamtools: Binary alignment (BAM), variant call (BCF), or tabix file import, \url{http://bioconductor.org/packages/release/bioc/html/Rsamtools.html}
+}
+
+\author{
+Federico Comoglio
+}
+
+\note{
+The input BAM file must be sorted and indexed. Alignment with bowtie or bowtie2, conversion from SAM to BAM output, sorting and indexing using SAMtools is recommended.
+}
+
+\examples{
+library(Rsamtools)
+filename <- system.file( "extdata", "example.bam", package = "wavClusteR" )
+sortedBam <- readSortedBam( filename = filename )
+}
+
+\keyword{Import}
