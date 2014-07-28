@@ -9,7 +9,7 @@ getMetaTSS <- function( sortedBam, txDB = NULL, upstream = 1e3, downstream = 1e3
 #
 # Args:
 #   sortedBam: GRanges object, containing all raw data for wavClusteR2 analysis as returned by readSortedBam
-#   txDB: TranscriptDb object obtained through the makeTranscriptDbFromUCSC function. Default is NULL, namely the object will be fetched internally
+#   txDB: TxDb object obtained through the makeTranscriptDbFromUCSC function. Default is NULL, namely the object will be fetched internally
 #   upstream: numeric, the number of bases to be considered upstream the TSS. Default is 1000
 #   downstream: numeric, the number of bases to be considered downstream the TSS. Default is 1000
 #   nBins: numeric, the number of bins to be used. Defauls is 40, i.e. bin size 50 bases
@@ -33,10 +33,10 @@ getMetaTSS <- function( sortedBam, txDB = NULL, upstream = 1e3, downstream = 1e3
                       for a list of supported ones.')
 	}
 
-	#1-if not provided, create the TranscriptDb object
+	#1-if not provided, create the TxDb object
 	if( is.null( txDB ) ) {
 		if(verbose)
-			message( 'Creating TranscriptDb object...' )
+			message( 'Creating TxDb object...' )
 		txDB <- makeTranscriptDbFromUCSC(genome = genome, tablename = tablename)
 	}
 
@@ -109,7 +109,7 @@ getMetaGene <- function( clusters, txDB = NULL, upstream = 1e3, downstream = 1e3
 #
 # Args:
 #   clusters: GRanges object as returned by the getClusters or the filterClusters function
-#   txDB: TranscriptDb object obtained through the makeTranscriptDbFromUCSC function. Default is NULL, namely the object will be fetched internally
+#   txDB: TxDb object obtained through the makeTranscriptDbFromUCSC function. Default is NULL, namely the object will be fetched internally
 #   upstream: numeric, the number of bases to be considered upstream the gene. Default is 1000
 #   downstream: numeric, the number of bases to be considered downstream the gene. Default is 1000
 #   nBins: numeric, the number of bins to be used to partition the genes. Default is 40.
@@ -134,10 +134,10 @@ getMetaGene <- function( clusters, txDB = NULL, upstream = 1e3, downstream = 1e3
                       for a list of supported ones.')
 	}
 
-	#1-if not provided, create the TranscriptDb object
+	#1-if not provided, create the TxDb object
 	if( is.null( txDB ) ) {
 		if(verbose)
-			message( 'Creating TranscriptDb object...' )
+			message( 'Creating TxDb object...' )
 		txDB <- makeTranscriptDbFromUCSC(genome = genome, tablename = tablename)
 	}
 
@@ -240,7 +240,7 @@ getMetaCoverage <- function( clusters, txDB = NULL, upstream = 1e3, downstream =
 #
 # Args:
 #   clusters: GRanges object as returned by the getClusters or the filterClusters function
-#   txDB: TranscriptDb object obtained through the makeTranscriptDbFromUCSC function. Default is NULL, namely the object will be fetched internally
+#   txDB: TxDb object obtained through the makeTranscriptDbFromUCSC function. Default is NULL, namely the object will be fetched internally
 #   upstream: numeric, the number of bases to be considered upstream the gene. Default is 1000
 #   downstream: numeric, the number of bases to be considered downstream the gene. Default is 1000
 #   nBins: numeric, the number of bins to be used to partition the genes. Default is 40.
@@ -266,10 +266,10 @@ getMetaCoverage <- function( clusters, txDB = NULL, upstream = 1e3, downstream =
                       for a list of supported ones.')
 	}
 
-	#1-if not provided, create the TranscriptDb object
+	#1-if not provided, create the TxDb object
 	if( is.null( txDB ) ) {
 		if(verbose)
-			message( 'Creating TranscriptDb object...' )
+			message( 'Creating TxDb object...' )
 		txDB <- makeTranscriptDbFromUCSC(genome = genome, tablename = tablename)
 	}
 

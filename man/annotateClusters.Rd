@@ -10,7 +10,7 @@
 
 \arguments{
   \item{clusters}{GRanges object containing individual clusters as identified by the \link{getClusters} function}
-  \item{txDB}{TranscriptDb object obtained through a call to the \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures} package. Default is NULL, namely the object will be fetched internally}
+  \item{txDB}{TxDb object obtained through a call to the \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures} package. Default is NULL, namely the object will be fetched internally}
   \item{genome}{A character specifying the genome abbreviation used by UCSC. Available abbreviations are returned by a call to \code{ucscGenomes()[ , "db"]}. Default is "hg19" (human genome)}
   \item{tablename}{A character specifying the name of the UCSC table containing the transcript annotations to retrieve. Available table names are returned by a call to \code{supportedUCSCtables()}. Default is "ensGene", namely ensembl gene annotations}
   \item{plot}{Logical, if TRUE a dotchart with cluster annotations is produced}
