@@ -9,7 +9,7 @@ annotateClusters <- function( clusters, txDB = NULL, genome = 'hg19', tablename 
 #
 # Args:
 #   clusters: GRanges object containing individual clusters as identified by getClusters
-#   txDB: TranscriptDb object obtained through the makeTranscriptDbFromUCSC function. Default is NULL, namely the object will be fetched internally
+#   txDB: TxDb object obtained through the makeTranscriptDbFromUCSC function. Default is NULL, namely the object will be fetched internally
 #   genome: character, genome abbreviation used by UCSC and obtained by ucscGenomes()[ , "db"]. Default is human genome (hg19)
 #   tablename: character, name of the UCSC table containing the transcript annotations to retrieve, according to supportedUCSCtables(). Default is ensembl gene annotation (ensGene)
 #   plot: logical, if TRUE plots dotchart
@@ -29,16 +29,16 @@ annotateClusters <- function( clusters, txDB = NULL, genome = 'hg19', tablename 
                       for a list of supported ones.')
 	}
 
-	#1-if not provided, create the TranscriptDb object
+	#1-if not provided, create the TxDb object
 	if( is.null( txDB ) ) {
 		if(verbose)
-			message( 'Creating TranscriptDb object...' )
+			message( 'Creating TxDb object...' )
 		txDB <- makeTranscriptDbFromUCSC(genome = genome, tablename = tablename)
 	}
 	
-	#2-obtaining CDS, introns, 3' and 5'-UTRs from the TranscriptDb object, make them unique and compute their length
+	#2-obtaining CDS, introns, 3' and 5'-UTRs from the TxDb object, make them unique and compute their length
 	if(verbose)
-		message( 'Extracting genomic features from TranscriptDb object...' )
+		message( 'Extracting genomic features from TxDb object...' )
 
 	cds <- cdsBy( txDB )
 	ix <- intronsByTranscript( txDB )

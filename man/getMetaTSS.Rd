@@ -11,7 +11,7 @@
 
 \arguments{
   \item{sortedBam}{GRanges object containing aligned reads as returned by \link{readSortedBam}}  
-  \item{txDB}{TranscriptDb object obtained through a call to the \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures} package. Default is NULL, namely the object will be fetched internally}
+  \item{txDB}{TxDb object obtained through a call to the \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures} package. Default is NULL, namely the object will be fetched internally}
   \item{upstream}{An integer corresponding to the number of bases to be considered upstream the TSS. Default is 1000}
   \item{downstream}{An integer corresponding to the number of bases to be considered downstream the TSS. Default is 1000}
   \item{nBins}{An integer corresponding to the number of bins to be used to partition the genes. Default is 40, i.e. bin size 50 bases}

@@ -11,7 +11,7 @@
 
 \arguments{
   \item{clusters}{GRanges object containing individual clusters as identified by the \link{getClusters} function}
-  \item{txDB}{TranscriptDb object obtained through a call to the \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures} package. Default is NULL, namely the object will be fetched internally}
+  \item{txDB}{TxDb object obtained through a call to the \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures} package. Default is NULL, namely the object will be fetched internally}
   \item{upstream}{An integer corresponding to the number of bases to be considered upstream the gene. Default is 1000}
   \item{downstream}{An integer corresponding to the number of bases to be considered downstream the gene. Default is 1000}
   \item{nBins}{An integer corresponding to the number of bins to be used to partition the genes. Default is 40}
