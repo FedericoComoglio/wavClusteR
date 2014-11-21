@@ -1,0 +1,35 @@
+citEntry(entry="article",
+         title = "Mixture models and wavelet transforms reveal high confidence RNA-protein interaction sites in MOV10 PAR-CLIP data",
+         author = personList( as.person("Cem Sievers"), 
+					as.person("Tommy Schlumpf"),
+					as.person("Ritwick Sawarkar"),
+					as.person("Federico Comoglio"),
+                              as.person("Renato Paro")),
+         year = "2012",
+         journal = "Nucleic Acids Research",
+         volume = "40(20)",
+         pages = "e160",
+         doi = "10.1093/nar/gks697",
+         url = "http://www.ncbi.nlm.nih.gov/pubmed/?term=sievers+comoglio",
+         
+         textVersion = 
+         paste("Sievers, C., Schlumpf, T., Sawarkar, R., Comoglio, F. & Paro, R. (2012)", 
+               "Mixture models and wavelet transforms reveal high confidence RNA-protein interaction sites in MOV10 PAR-CLIP data.",
+                "Nucleic Acids Research, 40(20): e160" ) )
+
+citEntry(entry="article",
+         title = "wavClusteR: an R package for PAR-CLIP data analysis",
+         author = personList( as.person("Federico Comoglio"), 
+					as.person("Cem Sievers"),
+					as.person("Renato Paro")),
+         year = "XXXX",
+         journal = "submitted",
+         volume = "",
+         pages = "",
+         doi = "",
+         url = "",
+         
+         textVersion = 
+         paste("Comoglio, F*, Sievers, C* & Paro, R. (XXXX)", 
+               "wavClusteR: an R package for PAR-CLIP data analysis",
+                "submitted" ) )

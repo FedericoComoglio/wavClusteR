@@ -1,0 +1,47 @@
+\name{fitMixtureModel}
+\alias{fitMixtureModel}
+
+\title{Fit a non-parametric mixture model from all identified substitutions}
+
+\description{Estimates the two-component mixture model consisting of the mixing coefficients and the density functions.}
+
+\usage{fitMixtureModel(countTable, substitution = "TC")}
+
+\arguments{
+  \item{countTable}{A GRanges object, corresponding to a count table as returned by the \link{getAllSub} function}
+  \item{substitution}{A character indicating which substitution is induced by the experimental procedure (e.g. 4-SU treatment - a standard in PAR-CLIP experiments - induces T to C transitions and hence substitution = 'TC' in this case.)}
+}
+
+\value{A list containing:
+ \item{l1}{The first mixing coefficient}
+ \item{l2}{The second mixing coefficient}
+ \item{p}{The mixture model}
+ \item{p1}{The first component of the mixture}
+ \item{p2}{The second component of the mixture}
+}
+
+\author{Federico Comoglio and Cem Sievers}
+
+\seealso{
+\code{\link{getAllSub}}
+\code{\link{getExpInterval}}
+}
+\examples{
+\dontrun{
+filename <- system.file( "extdata", "example.bam", package = "wavClusteR" )
+example <- readSortedBam(filename = filename)
+countTable <- getAllSub( example, minCov = 10, cores = 1 )
+
+fitMixtureModel( countTable, substitution = "TC" )
+}
+
+#load and inspect the model
+data( model )
+str( model )
+
+#plot densities and estimate the relative substitution frequency support dominated by PAR-CLIP induction
+getExpInterval( model, bayes = TRUE, plot = TRUE )
+}
+
+\keyword{ core }
+\keyword{ model }
