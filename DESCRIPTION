@@ -1,11 +1,12 @@
 Package: wavClusteR
 Type: Package
 Title: Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data
-Version: 1.99.2
+Version: 1.99.3
 Date: 2014-03-08
 Depends: R (>= 3.0.0), GenomicRanges, Rsamtools
 Imports: Biostrings, foreach, GenomicFeatures, ggplot2, Hmisc, IRanges, mclust, rtracklayer, seqinr, stringr, wmtsa
-Suggests: doMC, BSgenome.Hsapiens.UCSC.hg19
+Suggests: BSgenome.Hsapiens.UCSC.hg19
+Enhances: doMC
 Author: Federico Comoglio and Cem Sievers
 Maintainer: Federico Comoglio <federico.comoglio@bsse.ethz.ch>
 Description: Infer PAR-CLIP induced transitions and discriminate them from sequencing error, SNPs, contaminants and additional non-experimental causes, using a non-parametric mixture model. wavClusteR resolves cluster boundaries at high resolution and provides robust estimation of cluster statistics. In addition, the package allows to integrate RNA-Seq data to estimate FDR over the entire range of relative substitution frequencies. Furthermore, the package provides post-processing of results and functions to export results for UCSC genome browser visualization and motif search analysis. Key functions support parallel multicore computing. While wavClusteR was designed for PAR-CLIP data analysis, it can be applied to the analysis of other Next-Generation Sequencing data obtained from substitution inducing experimental procedures (e.g. BisSeq)
