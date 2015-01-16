@@ -52,6 +52,22 @@ exportGR <- function( GR, filename, trackname, description) {
 }
 
 
+
+
+#' Export coverage as BigWig track
+#' 
+#' Export coverage as BigWig track, compatible with the UCSC genome browser
+#' 
+#' 
+#' @usage exportCoverage(coverage, filename = 'wavClusters.BigWig')
+#' @param coverage An Rle object containing the coverage at each genomic
+#' position as returned by a call to \code{coverage}
+#' @param filename A character defining the BED file name. Default to
+#' "wavClusters.BigWig"
+#' @return A BigWig file of the exported Rle object
+#' @author Federico Comoglio
+#' @keywords postprocessing
+#' @export exportCoverage
 exportCoverage <- function( coverage, filename = 'wavClusters.BigWig' ) {
 # Create UCSC compatible BigWig tracks of the coverage
 #
@@ -68,6 +84,30 @@ exportCoverage <- function( coverage, filename = 'wavClusters.BigWig' ) {
 }
 
 
+
+
+#' Export clusters as BED track
+#' 
+#' Export clusters as BED track, compatible with the UCSC genome browser
+#' 
+#' 
+#' @usage exportClusters(clusters, filename = 'wavClusters.bed', trackname =
+#' 'wavClusters', description = 'wavClusters')
+#' @param clusters GRanges object containing individual clusters as identified
+#' by the \link{filterClusters} function
+#' @param filename A character defining the BED file name. Default to
+#' "wavClusters.bed"
+#' @param trackname A character defining the track.name of the BED file.
+#' Default to "wavClusters"
+#' @param description A character defining the description of the BED file.
+#' Default to "wavClusters"
+#' @return A BED file of the exported GRanges object
+#' @note Clusters are color coded according to their strand information (red
+#' for the plus strand, blue for the minus strand).
+#' @author Federico Comoglio
+#' @seealso \code{\link{filterClusters}}
+#' @keywords postprocessing
+#' @export exportClusters
 exportClusters <- function( clusters, filename = 'wavClusters.bed', trackname = 'wavClusters', description = 'wavClusters') {
 # Create UCSC compatible BED tracks of clusters
 #
@@ -86,6 +126,31 @@ exportClusters <- function( clusters, filename = 'wavClusters.bed', trackname = 
 }
 
 
+
+
+#' Export high-confidence substitutions as BED track
+#' 
+#' Export high-confidence substitutions as BED track, compatible with the UCSC
+#' genome browser
+#' 
+#' 
+#' @usage exportHighConfSub(highConfSub, filename = 'highConfSub.bed',
+#' trackname = 'highConfSub', description = 'highConfSub')
+#' @param highConfSub GRanges object containing high-confidence substitution
+#' sites as returned by the \link{getHighConfSub} function
+#' @param filename A character defining the BED file name. Default to
+#' "wavClusters.bed"
+#' @param trackname A character defining the track.name of the BED file.
+#' Default to "wavClusters"
+#' @param description A character defining the description of the BED file.
+#' Default to "wavClusters"
+#' @return A BED file of the exported GRanges object
+#' @note Substitutions are color coded according to their strand information
+#' (red for the plus strand, blue for the minus strand).
+#' @author Federico Comoglio
+#' @seealso \code{\link{getHighConfSub}}
+#' @keywords postprocessing
+#' @export exportHighConfSub
 exportHighConfSub <- function( highConfSub, filename = 'highConfSub.bed', trackname = 'highConfSub', description = 'highConfSub') {
 # Create UCSC compatible BED tracks of high confidence substitutions
 #
@@ -104,6 +169,24 @@ exportHighConfSub <- function( highConfSub, filename = 'highConfSub.bed', trackn
 }
 
 
+
+
+#' Export cluster sequences for motif search analysis
+#' 
+#' Export cluster sequences for motif search analysis (FASTA format), e.g.
+#' using MEME-ChIP
+#' 
+#' 
+#' @usage exportSequences(clusters, filename = 'wavClusters.fasta')
+#' @param clusters GRanges object containing individual clusters as identified
+#' by the \link{filterClusters} function
+#' @param filename A character defining the BED file name. Default to
+#' "wavClusters.fasta"
+#' @return A FASTA file containing the cluster sequences
+#' @author Federico Comoglio
+#' @seealso \code{\link{filterClusters}}
+#' @keywords postprocessing
+#' @export exportSequences
 exportSequences <- function( clusters, filename = 'wavClusters.fasta' ) {
 # Export DNA sequences underlying clusters for motif search
 #

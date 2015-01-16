@@ -4,6 +4,82 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+
+#' Annotate clusters with respect to transcript features
+#' 
+#' Carries out strand-specific annotation of clusters with respect to distinct
+#' transcript features, particularly introns, coding sequences, 3'-UTRs,
+#' 5'-UTRs. Mapping to multiple features and to those outside the above
+#' mentioned ones are reported. Unmapped clusters are then futher further
+#' analyzed and annotated with respect to features localizing on the anti-sense
+#' strand. Results can be plotted as dotchart and annotations are returned as
+#' clusters metadata.
+#' 
+#' 
+#' @usage annotateClusters(clusters, txDB = NULL, genome = "hg19", tablename =
+#' "ensGene", plot = TRUE, verbose = TRUE)
+#' @param clusters GRanges object containing individual clusters as identified
+#' by the \link{getClusters} function
+#' @param txDB TranscriptDb object obtained through a call to the
+#' \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures}
+#' package. Default is NULL, namely the object will be fetched internally
+#' @param genome A character specifying the genome abbreviation used by UCSC.
+#' Available abbreviations are returned by a call to \code{ucscGenomes()[ ,
+#' "db"]}. Default is "hg19" (human genome)
+#' @param tablename A character specifying the name of the UCSC table
+#' containing the transcript annotations to retrieve. Available table names are
+#' returned by a call to \code{supportedUCSCtables()}. Default is "ensGene",
+#' namely ensembl gene annotations
+#' @param plot Logical, if TRUE a dotchart with cluster annotations is produced
+#' @param verbose Logical, if TRUE processing steps are printed
+#' @return Same as the input GRanges object, with an additional metadata column
+#' containing the following character encoding of the genomic feature each
+#' cluster maps to: \item{"CDS ss"}{Coding Sequence Sense Strand}
+#' \item{"Introns ss"}{Intron Sense Strand} \item{"3' UTR ss"}{3' UTR Sense
+#' Strand} \item{"5' UTR ss"}{5' UTR Sense Strand} \item{"Multiple"}{More than
+#' one of the above} \item{"CDS as"}{Coding Sequence Antisense Strand}
+#' \item{"Introns as"}{Intron Antisense Strand} \item{"3' UTR as"}{3' UTR
+#' Antisense Strand} \item{"5' UTR as"}{5' UTR Antisense Strand}
+#' \item{"Other"}{None of the above} If \code{plot=TRUE}, a dotchart is
+#' produced in addition.
+#' @author Federico Comoglio
+#' @seealso \code{\link{getClusters}}
+#' @references M. Carlson and H. Pages and P. Aboyoun and S. Falcon and M.
+#' Morgan and D. Sarkar and M. Lawrence, GenomicFeatures: Tools for making and
+#' manipulating transcript centric annotations, R package version 1.12.4
+#' 
+#' Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for PAR-CLIP
+#' data analysis, submitted
+#' @keywords postprocessing graphics
+#' @examples
+#' 
+#' require(BSgenome.Hsapiens.UCSC.hg19)
+#' 
+#' data( model, package = "wavClusteR" ) 
+#' 
+#' filename <- system.file( "extdata", "example.bam", package = "wavClusteR" )
+#' example <- readSortedBam( filename = filename )
+#' countTable <- getAllSub( example, minCov = 10, cores = 1 )
+#' highConfSub <- getHighConfSub( countTable, supportStart = 0.2, supportEnd = 0.7, substitution = "TC" )
+#' coverage <- coverage( example )
+#' clusters <- getClusters( highConfSub = highConfSub, 
+#'                          coverage = coverage, 
+#'                          sortedBam = example, 
+#' 	                 method = 'mrn', 
+#' 	                 cores = 1, 
+#' 	                 threshold = 2 ) 
+#' 
+#' fclusters <- filterClusters( clusters = clusters, 
+#' 		             highConfSub = highConfSub, 
+#'         		     coverage = coverage,
+#' 			     model = model, 
+#' 			     genome = Hsapiens, 
+#' 		             refBase = 'T', 
+#' 		             minWidth = 12 )
+#' \dontrun{fclusters <- annotateClusters( clusters = fclusters )}
+#' 
+#' @export annotateClusters
 annotateClusters <- function( clusters, txDB = NULL, genome = 'hg19', tablename = 'ensGene', plot = TRUE, verbose = TRUE ) {
 # Annotates clusters w.r.t. genomic annotations from UCSC
 #

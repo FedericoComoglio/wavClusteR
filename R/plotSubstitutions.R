@@ -4,6 +4,40 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+
+#' Barplot visualization of the number of genomic positions exhibiting a given
+#' substitution and, if model provided, additional diagnostic plots.
+#' 
+#' Graphical representation of the total number of genomic positions exhibiting
+#' one or more substitutions of a given type. This information is used to
+#' estimate the mixing coefficients of the non-parametric mixture model. If the
+#' mixture model fit is provided, returns additional diagnostic plots such as
+#' the total number of reads exhibiting a given substitution and relative
+#' substitution frequency-dependent representations of the total number of
+#' genomic positions with substitutions of a given type.
+#' 
+#' 
+#' @usage plotSubstitutions(countTable, highlight = "TC", model)
+#' @param countTable A GRanges object, corresponding to a count table as
+#' returned by the \link{getAllSub} function
+#' @param highlight A character indicating which substitution should be
+#' highlighted in the barplot. A standard PAR-CLIP experiment employing 4-SU
+#' treatment induces T to C transitions, encoded as "TC". Default is "TC".
+#' @param model A list containing the model as returned by the function
+#' \code{fitMixtureModel}
+#' @return called for its effect
+#' @author Federico Comoglio and Cem Sievers
+#' @seealso \code{\link{getAllSub}}
+#' @keywords graphics
+#' @examples
+#' 
+#' filename <- system.file( "extdata", "example.bam", package = "wavClusteR" )
+#' example <- readSortedBam( filename = filename )
+#' countTable <- getAllSub( example, minCov = 10, cores = 1 )
+#' plotSubstitutions(countTable = countTable, highlight = "TC")
+#' 
+#' @export plotSubstitutions
 plotSubstitutions <- function( countTable, highlight = 'TC', model ) {
 # produce barplot of observed substitutions. If model is not supplied, returns the simplest diagnostic plot. Produces four diagnostic plots otherwise.
 #
