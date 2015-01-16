@@ -109,6 +109,46 @@ getCountTable <- function( substWithCov, minCov ) {
 }
 
 
+
+
+#' Identify all substitutions observed across genomic positions exhibiting a
+#' specified minimum coverage
+#' 
+#' All substitutions observed across genomic positions exhibiting user-defined
+#' minimum coverage are extracted and a count table is returned. This function
+#' supports parallel computing.
+#' 
+#' The choice of the minimum coverage influences the variance of the relative
+#' substitution frequency estimates, which in turn affect the mixture model
+#' fit. A conservative value depending on the library size is recommended for a
+#' first analysis. Values smaller than 10 have not been tested and are
+#' therefore not recommended.
+#' 
+#' @usage getAllSub(sortedBam, minCov = 20, cores = 1)
+#' @param sortedBam GRanges object containing aligned reads as returned by
+#' \link{readSortedBam}
+#' @param minCov An integer defining the minimum coverage required at a genomic
+#' position exhibiting a substitution. Genomic positions of coverage less than
+#' \code{minCov} are discarded. Default is 20 (see Details).
+#' @param cores An integer defining the number of cores to be used for parallel
+#' processing, if available. Default is 1.
+#' @return A GRanges object containing a count table, where each range
+#' correspond to a substitution. The metadata correspond to the following
+#' information: \item{substitutions}{observed substitution, e.g. AT, i.e. A in
+#' the reference sequence and T in the mapped read.}
+#' \item{coverage}{strand-specific coverage.} \item{count}{number of
+#' strand-specific substitutions.}
+#' @author Federico Comoglio and Cem Sievers
+#' @seealso \code{\link{readSortedBam}}
+#' @keywords core
+#' @examples
+#' 
+#' filename <- system.file( "extdata", "example.bam", package = "wavClusteR" )
+#' example <- readSortedBam(filename = filename)
+#' countTable <- getAllSub( example, minCov = 10, cores = 1 )
+#' countTable
+#' 
+#' @export getAllSub
 getAllSub <- function( sortedBam, minCov = 20, cores = 1 ) {
 # Obtain all substitutions observed across genomic positions exhibiting a specified minimum coverage.
 #

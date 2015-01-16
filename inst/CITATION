@@ -18,18 +18,18 @@ citEntry(entry="article",
                 "Nucleic Acids Research, 40(20): e160" ) )
 
 citEntry(entry="article",
-         title = "wavClusteR: an R package for PAR-CLIP data analysis",
+         title = "Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data",
          author = personList( as.person("Federico Comoglio"), 
 					as.person("Cem Sievers"),
 					as.person("Renato Paro")),
-         year = "XXXX",
-         journal = "submitted",
-         volume = "",
+         year = “2015”,
+         journal = “BMC” Bioinformatics,
+         volume = "in the press",
          pages = "",
          doi = "",
          url = "",
          
          textVersion = 
-         paste("Comoglio, F*, Sievers, C* & Paro, R. (XXXX)", 
-               "wavClusteR: an R package for PAR-CLIP data analysis",
-                "submitted" ) )
+         paste("Comoglio, F, Sievers, C & Paro, R. (2015)”, 
+               "Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data",
+                “BMC Bioinformatics“, “in the press“ ) )
