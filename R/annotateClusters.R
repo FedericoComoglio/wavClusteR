@@ -1,10 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
+#2015 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
 
 #' Annotate clusters with respect to transcript features
 #' 
@@ -80,20 +74,8 @@
 #' \dontrun{fclusters <- annotateClusters( clusters = fclusters )}
 #' 
 #' @export annotateClusters
+
 annotateClusters <- function( clusters, txDB = NULL, genome = 'hg19', tablename = 'ensGene', plot = TRUE, verbose = TRUE ) {
-# Annotates clusters w.r.t. genomic annotations from UCSC
-#
-# Args:
-#   clusters: GRanges object containing individual clusters as identified by getClusters
-#   txDB: TranscriptDb object obtained through the makeTranscriptDbFromUCSC function. Default is NULL, namely the object will be fetched internally
-#   genome: character, genome abbreviation used by UCSC and obtained by ucscGenomes()[ , "db"]. Default is human genome (hg19)
-#   tablename: character, name of the UCSC table containing the transcript annotations to retrieve, according to supportedUCSCtables(). Default is ensembl gene annotation (ensGene)
-#   plot: logical, if TRUE plots dotchart
-#   verbose: logical, if TRUE, prints steps. Default is true
-#
-# Returns:
-#   GRanges object witwh clusters, with an additional elementMetadata column containing a character identifier of the genomic feature each cluster maps to. If plot, then a dotchart is returned in addition.
-#
 # Error handling
 #   if txDB not provided, check that genome and tablename are within those available from UCSC, otherwise raise an error
 	

@@ -1,18 +1,6 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 computePosterior <- function( tableCovCount ) {
-# compute posterior densities
-#
-# Args:
-#   tableCovCount: a table object, as produced within the estimateP function
-#
-# Returns:
-#   a vector, with values of the estimated posterior density
-#
 # Error handling
 #   ...
 
@@ -112,15 +100,6 @@ estimateP <- function( countTableSplit ) {
 #' 
 #' @export fitMixtureModel
 fitMixtureModel <- function( countTable, substitution = 'TC' ) {
-# fit non-parametric mixture model and returns full density, components and mixing coefficients
-#
-# Args:
-#   countTable:  a GRanges object, corresponding to a count table where each substitution has a corresponding strand-specific coverage and a count value, as returned by the getFilteredSub function
-#   substitution: character, the specific transition induced by the experimental workflow. Default to 'TC' for 4-SU.
-#
-# Returns:
-#   a list, where slots correspond to mixing coefficients, full density and two individual densities
-#
 # Error handling
 #   ...
 

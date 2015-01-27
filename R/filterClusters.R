@@ -1,8 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 getLogOdd <- function( model, k, n ) {
 # Compute log odds for a given number of reads k exhibiting a transition over a total coverage n at that genomic position
@@ -182,8 +178,8 @@ computelogOdds <- function( model ) {
 #' sites in MOV10 PAR-CLIP data, Nucleic Acids Res. 40(20):e160. doi:
 #' 10.1093/nar/gks697
 #' 
-#' Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for PAR-CLIP
-#' data analysis, submitted
+#' Comoglio F, Sievers C and Paro R.
+#' 
 #' @keywords core
 #' @examples
 #' 
@@ -214,21 +210,6 @@ computelogOdds <- function( model ) {
 #' 
 #' @export filterClusters
 filterClusters <- function( clusters, highConfSub, coverage, model, genome, refBase = 'T', minWidth = 12, verbose = TRUE ) {
-# Wrapper to call the filterClusters functions. Calls subroutine depending on the method used to compute clusters. This information is stored in the metadata( ranges( clusters ) ) slot (object of type list).
-#
-# Args:
-#   clusters: GRanges object containing individual clusters as identified by getClusters
-#   highConfSub: GRanges object containing high-confidence transitions
-#   coverage: Rle object containing sequencing coverage
-#   model: list containing the parameters of the mixture model
-#   genome: BSgenome object of the relevant genome (e.g. Hsapiens)
-#   refBase: character, the base in the reference genome for which transitions are induced. Default is T (for T-->C)
-#   minWidth: numeric, minimum cluster width. Clusters narrower than minWidth will be extended to that size. Default is 12
-#   verbose: logical, if TRUE, prints steps. Default is TRUE
-#
-# Returns:
-#   A GRanges object containing valid clusters
-#
 # Error handling
 #   if method is not within 'coverage' or 'cwt', raise an error
 	method <- metadata( ranges( clusters ) )[[1]] #slot is a list
