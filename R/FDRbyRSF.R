@@ -1,10 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 
 #' Estimate False Discovery Rate within the relative substitution frequency
 #' support by integrating PAR-CLIP data and RNA-Seq data
@@ -47,23 +41,8 @@
 #' PAR-CLIP data analysis, submitted
 #' @keywords core graphics
 #' @export estimateFDR
+
 estimateFDR <- function( countTable, RNASeq, substitution = 'TC', minCov = 20, span = 0.1, cores = 1, plot = TRUE, verbose = TRUE, ... ) {
-# estimate False Discovery Rate within the RSF support using RNA-Seq data (current version requires unstranded RNA-Seq)
-#
-# Args:
-#   countTable:  a GRanges object, corresponding to a count table where each substitution has a corresponding strand-specific coverage and a count value, as returned by the getAllSub function
-#   RNASeq: a GRanges object containing all RNA-Seq reads, as obtained by loading a BAM file using the readSortedBam function
-#   substitution: character, the substitution/transition induced by the experimental procedure
-#   minCov: numeric, the minimum required RNA-Seq coverage for a substitution identified by PAR-CLIP to be considered. Default is 20.
-#   span: numeric, the width of RSF intervals to be considered
-#   cores: numeric, the number of cores to be used for parallel computing. Default is 1
-#   plot: logical, if TRUE plots line plot with additional features. Default is TRUE
-#   verbose: logical, if TRUE, prints steps. Default is TRUE
-#   ...: additional parameters to be passed to the plot function
-#
-# Returns:
-#   A list with two slots, containing the total number of positives and the FDR for each RSF interval, respectively. If plot, then also plots positives and FDR as a line plot.
-#
 # Error handling
 #   ...
 

@@ -1,8 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 getComplSubst <- function( processedMD ) { 
 # Return complementary bases for substitutions identified on the minus strand
@@ -150,16 +146,6 @@ getCountTable <- function( substWithCov, minCov ) {
 #' 
 #' @export getAllSub
 getAllSub <- function( sortedBam, minCov = 20, cores = 1 ) {
-# Obtain all substitutions observed across genomic positions exhibiting a specified minimum coverage.
-#
-# Args:
-#   sortedBam: GRanges object, containing all raw data for wavClusteR2 analysis as returned by readSortedBam
-#   minCov: numeric, the minimum coverage required at a genomic position exhibiting a substitution in order to return it in the output.
-#   cores: numeric, the number of cores to be used for parallel processing
-#
-# Returns:
-#   a GRanges object, corresponding to a count table where each substitution has a corresponding strand-specific coverage and a count value
-#
 # Error handling
 #   if qseq (read sequences) and MD (MD tag) are present as metadata, raise an error
 	emd <- elementMetadata( sortedBam )	#dataframe object	

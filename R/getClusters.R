@@ -1,9 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 
 #' Identify clusters containing high-confidence substitutions and resolve
@@ -78,21 +73,6 @@
 #' 
 #' @export getClusters
 getClusters <- function(highConfSub, coverage, sortedBam, method = 'mrn', cores = 1, threshold, step = 1, snr = 3) {
-# Wrapper to call the getClusters functions depending on the method to be used to determine binding positions
-#
-# Args:
-#   highConfSub: GRanges object containing high-confidence transitions
-#   coverage: Rle object containing sequencing coverage
-#   sortedBam: list, contains BAM file slots as read in by the readSortedBam function
-#   method: character, set to 'mrn' or to 'cwt' to compute clusters using the mini rank norm- or the wavelet transform-based identification, respectively
-#   cores: numeric, the number of cores to be used for parallel evaluation. Default is 1.
-#   threshold: numeric, the difference in coverage to be considered noise. No value implies learning threshold from data
-#   step: numeric, step (in bp) to determine whether CWT needs to be recomputed. For 'coverage' method only. Default to 1
-#   snr: signal-to-noise ratio. For 'coverage' method only. Default to 3
-#
-# Returns:
-#   A GRanges object containing clusters
-#
 # Error handling
 #   if method is not within 'coverage' or 'cwt', raise an error
 

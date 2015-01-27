@@ -1,8 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 exportGR <- function( GR, filename, trackname, description) {
 # Create UCSC compatible BED tracks of input object
@@ -69,15 +65,6 @@ exportGR <- function( GR, filename, trackname, description) {
 #' @keywords postprocessing
 #' @export exportCoverage
 exportCoverage <- function( coverage, filename = 'wavClusters.BigWig' ) {
-# Create UCSC compatible BigWig tracks of the coverage
-#
-# Args:
-#   coverage: Rle object, containing the coverage of the sortedBam file as returned by the coverage function
-#   filename: character, name of the file to be written. Default is 'wavClusters.bigWig'
-#
-# Returns:
-#   writes a BigWig file to the specified path
-#
 # Error handling
 #   ...
 	export( coverage, con = filename, format = 'BigWig' )
@@ -109,17 +96,6 @@ exportCoverage <- function( coverage, filename = 'wavClusters.BigWig' ) {
 #' @keywords postprocessing
 #' @export exportClusters
 exportClusters <- function( clusters, filename = 'wavClusters.bed', trackname = 'wavClusters', description = 'wavClusters') {
-# Create UCSC compatible BED tracks of clusters
-#
-# Args:
-#   clusters: GRanges object as returned by the getClusters or the filterClusters function
-#   filename: character, name of the file to be written. Default is 'wavClusters.bed'
-#   trackname: character, track name. Default is 'wavClusters'
-#   description: character, track description. Default is 'wavClusters'
-#
-# Returns:
-#   writes a BED file to the specified path
-#
 # Error handling
 #   ...
 	exportGR( clusters, filename = filename, trackname = trackname, description = description )
@@ -152,17 +128,6 @@ exportClusters <- function( clusters, filename = 'wavClusters.bed', trackname = 
 #' @keywords postprocessing
 #' @export exportHighConfSub
 exportHighConfSub <- function( highConfSub, filename = 'highConfSub.bed', trackname = 'highConfSub', description = 'highConfSub') {
-# Create UCSC compatible BED tracks of high confidence substitutions
-#
-# Args:
-#   highConfSub: GRanges object as returned by the getHighConfSub function
-#   filename: character, name of the file to be written. Default is 'highConfSub.bed'
-#   trackname: character, track name. Default is 'highConfSub'
-#   description: character, track description. Default is 'highConfSub'
-#
-# Returns:
-#   writes a BED file to the specified path
-#
 # Error handling
 #   ...
 	exportGR( highConfSub, filename = filename, trackname = trackname, description = description )
@@ -188,15 +153,6 @@ exportHighConfSub <- function( highConfSub, filename = 'highConfSub.bed', trackn
 #' @keywords postprocessing
 #' @export exportSequences
 exportSequences <- function( clusters, filename = 'wavClusters.fasta' ) {
-# Export DNA sequences underlying clusters for motif search
-#
-# Args:
-#   clusters: GRanges object as returned by the filterClusters function
-#   filename: character, name of the file to be written. Default is 'wavClusters.fasta'
-#
-# Returns:
-#   writes a fasta file to the specified path, to be used for motif search (e.g. using the web GUI of MEME-ChIP)
-#
 # Error handling
 #   ...
 	sequences <- elementMetadata( clusters )[, 'Sequence']

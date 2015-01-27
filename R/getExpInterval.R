@@ -1,9 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 
 #' Identify the interval of relative substitution frequencies dominated by
@@ -52,19 +47,8 @@
 #' support
 #' 
 #' @export getExpInterval
+
 getExpInterval <- function( model, bayes = TRUE, leftProb, rightProb, plot = TRUE ) {
-# identify the RSF interval dominated by experimental induction and, if plot, returns model fit diagnostic plots
-#
-# Args:
-#   model: list, mixture model as returned by fitMixtureModel
-#   bayes: logical, if TRUE the Bayes criterion (cutoff at 0.5 posterior probabilities) is applied. If FALSE, custom cutoff values should be provided. Default is TRUE.
-#   leftProb: numeric, the posterior probability cutoff to be applied to determine the start position of the support
-#   rightProb: numeric, the posterior probability cutoff to be applied to determine the end position of the support
-#   plot: logical, if TRUE diagnostics plot showing the model components, log odds and the computed posterior with highlighted identified support are returned
-#
-# Returns:
-#   a list with two numeric slot, corresponding to the extreme of the support
-#
 # Error handling
 #   if bayes FALSE and no custom cutoffs provided, raise an error
 
