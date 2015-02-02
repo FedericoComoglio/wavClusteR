@@ -15,7 +15,7 @@ citEntry(entry="article",
          textVersion = 
          paste("Sievers, C., Schlumpf, T., Sawarkar, R., Comoglio, F. & Paro, R. (2012)", 
                "Mixture models and wavelet transforms reveal high confidence RNA-protein interaction sites in MOV10 PAR-CLIP data.",
-                "Nucleic Acids Research, 40(20): e160" ) )
+                "Nucleic Acids Research, 40(20), e160" ) )
 
 citEntry(entry="article",
          title = "Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data",
@@ -24,12 +24,12 @@ citEntry(entry="article",
 					as.person("Renato Paro")),
          year = “2015”,
          journal = “BMC” Bioinformatics,
-         volume = "in the press",
-         pages = "",
-         doi = "",
-         url = "",
+         volume = “16”,
+         pages = “32”,
+         doi = "10.1186/s12859-015-0470-y",
+         url = "http://www.ncbi.nlm.nih.gov/pubmed/?term=sievers+comoglio",
          
          textVersion = 
          paste("Comoglio, F, Sievers, C & Paro, R. (2015)”, 
                "Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data",
-                “BMC Bioinformatics“, “in the press“ ) )
+                “BMC Bioinformatics, 16, 32“ ) )
