@@ -397,7 +397,7 @@ sessionInfo()
 \bibitem{cemo} Sievers, C., Schlumpf, T., Sawarkar, R., Comoglio, F. \& Paro, R. (2012) Mixture models and wavelet transforms reveal high confidence RNA-protein interaction sites in MOV10 PAR-CLIP data.
 \textit{Nucleic Acids Res} {\bf 40(2)}: e160
 
-\bibitem{cf} Comoglio, F., Sievers, C. \& Paro, R. (2015) Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data. BMC Bioinformatics, in the press
+\bibitem{cf} Comoglio, F., Sievers, C. \& Paro, R. (2015) Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data. BMC Bioinformatics, 16, 32
 
 \bibitem{Langmead:2009p2762}
 Langmead,B., Trapnell,C., Pop,M. \& Salzberg,S.L. (2009)
