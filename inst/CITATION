@@ -18,18 +18,18 @@ citEntry(entry="article",
                 "Nucleic Acids Research, 40(20), e160" ) )
 
 citEntry(entry="article",
-         title = "Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data",
+         title = "Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data.",
          author = personList( as.person("Federico Comoglio"), 
 					as.person("Cem Sievers"),
 					as.person("Renato Paro")),
-         year = Ò2015Ó,
-         journal = ÒBMCÓ Bioinformatics,
-         volume = Ò16Ó,
-         pages = Ò32Ó,
+         year = "2015",
+         journal = "BMC Bioinformatics",
+         volume = "16",
+         pages = "32",
          doi = "10.1186/s12859-015-0470-y",
-         url = "http://www.ncbi.nlm.nih.gov/pubmed/?term=sievers+comoglio",
+         url = "http://www.biomedcentral.com/1471-2105/16/32/abstract",
          
          textVersion = 
-         paste("Comoglio, F, Sievers, C & Paro, R. (2015)Ó, 
-               "Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data",
-                ÒBMC Bioinformatics, 16, 32Ò ) )
+         paste("Comoglio, F, Sievers, C & Paro, R. (2015)", 
+               "Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data.",
+               "BMC Bioinformatics, 16, 32" ) )
