@@ -8,7 +8,8 @@
 model densities. See the help page of the \link{fitMixtureModel} function
 for a detailed description of the output.}
 \usage{
-data(model) model
+data(model) 
+model
 }
 \description{
 The non-parametric mixture model was fit on the entire Ago2 public available
