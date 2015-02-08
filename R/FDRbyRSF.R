@@ -55,8 +55,8 @@ estimateFDR <- function( countTable, RNASeq, substitution = 'TC', minCov = 20, s
 		hasSubst <- sortedBam[ flag ]
 		substMtx <- split( hasSubst, hasSubst$MD )	#suggested by MM, generates a GRangesList
 
-		processedMD <- wavClusteR:::processMD( substMtx, cores )
-		processedMD <- wavClusteR:::getComplSubst( processedMD )
+		processedMD <- processMD( substMtx, cores )
+		processedMD <- getComplSubst( processedMD )
 		n <- nrow( processedMD )
 		pos <- as.numeric( processedMD[, 'posMismatchesGenome'] )
 		allSubst <- GRanges( seqnames      = processedMD[, 'seqnames'], 

@@ -1,7 +1,8 @@
+import(IRanges) 
+
 importMethodsFrom(GenomicRanges, split)
 importMethodsFrom(GenomicRanges, as.data.frame)
 importMethodsFrom(GenomicRanges, sort)
-#importMethodsFrom(GenomicRanges, unlist)
 
 importMethodsFrom(IRanges, diff)
 importMethodsFrom(IRanges, as.matrix)
@@ -17,7 +18,6 @@ importFrom(stringr, str_count)
 importFrom(mclust, Mclust)
 importFrom(mclust, mclustBIC)
 
-#importFrom(doMC, registerDoMC)
 importFrom(foreach, foreach)
 importFrom(foreach, "%dopar%")
 
@@ -55,9 +55,6 @@ importFrom(Biostrings, getSeq)
 
 importFrom(Rsamtools, ScanBamParam)
 importFrom(Rsamtools, scanBam)
-
-
-import(IRanges) 
 
 export( 
 	readSortedBam,
