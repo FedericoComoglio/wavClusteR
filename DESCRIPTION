@@ -2,7 +2,7 @@ Package: wavClusteR
 Type: Package
 Title: Sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data
 Version: 1.99.3
-Date: 2015-15-01
+Date: 2015-08-02
 Depends: R (>= 3.0.0), GenomicRanges, Rsamtools
 Imports: Biostrings, foreach, GenomicFeatures, ggplot2, Hmisc, IRanges, mclust, rtracklayer, seqinr, stringr, wmtsa
 Suggests: BSgenome.Hsapiens.UCSC.hg19
