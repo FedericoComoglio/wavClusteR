@@ -22,7 +22,7 @@ experimental procedures (e.g. BisSeq)
 }
 \details{
 \tabular{ll}{ Package: \tab wavClusteR\cr Type: \tab Package\cr Version:
-\tab 1.99.3\cr Date: \tab 2015-15-01\cr License: \tab GPL-2\cr }
+\tab 1.99.3\cr Date: \tab 2015-08-02\cr License: \tab GPL-2\cr }
 }
 \author{
 Federico Comoglio and Cem Sievers
