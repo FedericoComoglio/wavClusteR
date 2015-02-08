@@ -1,8 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 processMD <- function( SubstMtx, cores ) {
 # higher-order wrapper to extract information from MD tag
@@ -76,6 +72,8 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 #   ...
 
      mds <- names( chunk )
+	strands <- unname( strand( chunk ) )	
+	strands <- lapply( strands, as.character )
 
      ## Match a nucleotide preceed by a digit (returns list)
      mdsSplit <- regmatches( mds, gregexpr( '\\d*|[ACGTN]{1}', mds) )
@@ -111,18 +109,79 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
      ##4-Identify genomic positions of mismatches
      posMismatchesGenome <- unlist(start(chunk)) + at0 - 1
 
-     ##5-Prepare output
+	##5-Get strand information right
+	strands <- unlist( lapply( seq_len( length( mismatched_n ) ), 
+		function( i ) rep( strands[[ i ]], each = mismatched_n[ i ] ) ) )
+
+     ##6-Prepare output
      DataFrame(
          chunkIdx = rep(seq_along(chunk), mismatched_n * chunk_n),
          readIdx  = rep(seq_along(qseq), rep(mismatched_n, chunk_n)),
          seqnames = unlist(unname(rep(seqnames(chunk), mismatched_n))),
          posMismatchesGenome = unlist(unname(posMismatchesGenome)),
-         strand   = unlist(unname(rep(strand(chunk), mismatched_n))),
+         strand   = strands,
          substitutions = subst)
   }
 
 
-
+##backup version (wrong strand assignment for complex MD)
+#processChunk <- function( chunk ) { #contributed by Martin Morgan
+## process a single chunk of MD tags (size 1e3)
+##
+## Args:
+##   chunk: a subset of SubstMtx as produced and passed by the processMD function 
+##
+## Returns:
+##   a data frame, containing identified substitutions according to MD tag for the processed chunk of data
+##
+## Error handling
+##   ...
+#
+#     mds <- names( chunk )
+#
+#     ## Match a nucleotide preceed by a digit (returns list)
+#     mdsSplit <- regmatches( mds, gregexpr( '\\d*|[ACGTN]{1}', mds) )
+#     len <- elementLengths( mdsSplit )
+#     grp <- rep( seq_along( len ), len )
+#
+#     ## number and geometry of substitutions
+#     u <- unlist(mdsSplit)
+#     isChar <- grepl("^[^[:digit:]]+$", u)
+#     isCharGrp <- splitAsList( isChar, grp )
+#
+#     mismatchedBases <- splitAsList( u[isChar], grp[isChar] )
+#
+#     mismatchedPos <- integer(length(u))
+#     mismatchedPos[isChar] <- 1L
+#     mismatchedPos[!isChar] <- as.integer(u[!isChar])
+#     mismatchedPos <- cumsum(splitAsList(mismatchedPos, grp))[isCharGrp]
+#
+#     chunk_n <- unname(elementLengths(chunk))
+#     mismatched_n <- unname(elementLengths(mismatchedPos))
+#
+#     ## nucleotide substitutions
+#     at0 <- mismatchedPos[rep(seq_along(chunk), chunk_n)]
+#     qseq <- unlist(chunk)$qseq
+#     offset <- c(0, cumsum(width(qseq)[-length(qseq)])) + at0
+#     at <- IRanges( unlist( offset ), width = 1 )
+#
+#     nucleotides <- extractAt(unlist(qseq), at)
+#     mismatchedBases <- unlist(rep(unname(mismatchedBases), chunk_n))
+##     subst <- DNAStringSet(paste0(nucleotides, mismatchedBases))
+#     subst <- paste0( mismatchedBases, nucleotides )
+#
+#     ##4-Identify genomic positions of mismatches
+#     posMismatchesGenome <- unlist(start(chunk)) + at0 - 1
+#
+#     ##5-Prepare output
+#     DataFrame(
+#         chunkIdx = rep(seq_along(chunk), mismatched_n * chunk_n),
+#         readIdx  = rep(seq_along(qseq), rep(mismatched_n, chunk_n)),
+#         seqnames = unlist(unname(rep(seqnames(chunk), mismatched_n))),
+#         posMismatchesGenome = unlist(unname(posMismatchesGenome)),
+#         strand   = unlist(unname(rep(strand(chunk), mismatched_n))),
+#         substitutions = subst)
+#  }
 
 
 #extractSingleMD <- function( MD, SubstMtxInstance ) {  
