@@ -134,7 +134,7 @@ getCountTable <- function( substWithCov, minCov ) {
 #' the reference sequence and T in the mapped read.}
 #' \item{coverage}{strand-specific coverage.} \item{count}{number of
 #' strand-specific substitutions.}
-#' @author Federico Comoglio and Cem Sievers
+#' @author Federico Comoglio and Cem Sievers, with contributions from Martin Morgan
 #' @seealso \code{\link{readSortedBam}}
 #' @keywords core
 #' @examples

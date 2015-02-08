@@ -30,6 +30,15 @@
 #' RSF interval (RSF support). \item{supportStart}{start of the high confidence
 #' RSF interval} \item{supportEnd}{end of the high confidence RSF interval}
 #' @author Federico Comoglio and Cem Sievers
+#'
+#' @references Sievers C, Schlumpf T, Sawarkar R, Comoglio F and Paro R. (2012) Mixture
+#' models and wavelet transforms reveal high confidence RNA-protein interaction
+#' sites in MOV10 PAR-CLIP data, Nucleic Acids Res. 40(20):e160. doi:
+#' 10.1093/nar/gks697
+#' 
+#' Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
+#' of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
+#'
 #' @seealso \code{\link{fitMixtureModel}} \code{\link{getHighConfSub}}
 #' \code{\link{estimateFDR}}
 #' @keywords core graphics

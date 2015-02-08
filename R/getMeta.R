@@ -179,6 +179,10 @@ getMetaTSS <- function( sortedBam, txDB = NULL, upstream = 1e3, downstream = 1e3
 #' \code{nBinsUD} containing normalized counts. If \code{plot}, the metagene
 #' profile is also depicted as a line plot.
 #' @author Federico Comoglio
+#'
+#' Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
+#' of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
+#'
 #' @seealso \code{\link{getClusters}}
 #' @references Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for
 #' PAR-CLIP data analysis, submitted

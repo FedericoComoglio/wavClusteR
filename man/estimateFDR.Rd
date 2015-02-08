@@ -58,8 +58,8 @@ conservative. See supplementary information in Comoglio et al. for details.
 Federico Comoglio and Cem Sievers
 }
 \references{
-Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for
-PAR-CLIP data analysis, submitted
+Comoglio F, Sievers C and Paro R, Sensitive and highly resolved identification
+of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 }
 \seealso{
 \code{\link{readSortedBam}}, \code{\link{getAllSub}}

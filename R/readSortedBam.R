@@ -1,9 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 
 #' Load a sorted BAM file
@@ -52,17 +47,17 @@ readSortedBam <- function( filename, which ) {
 
 	tag <- c('MD') #MD: mismatch field
 	if( missing(which) ) {	
-		param <- ScanBamParam( flag        = scanBamFlag(isUnmappedQuery=FALSE),
-				       tag         = tag,
-			       	       simpleCigar = FALSE,
-			               what        = c('rname', 'pos', 'qwidth', 'strand', 'seq') )
+		param <- ScanBamParam( flag = scanBamFlag(isUnmappedQuery=FALSE),
+				        tag         = tag,
+			       	    simpleCigar = FALSE,
+			            what        = c('rname', 'pos', 'qwidth', 'strand', 'seq') )
 	}
 	else {
-		param <- ScanBamParam( flag        = scanBamFlag(isUnmappedQuery=FALSE),
-				       tag         = tag,
-				       simpleCigar = FALSE,
-		                       what        = c('rname', 'pos', 'qwidth', 'strand', 'seq'),
-		   	               which       = which )
+		param <- ScanBamParam( flag = scanBamFlag(isUnmappedQuery=FALSE),
+				        tag         = tag,
+				        simpleCigar = FALSE,
+		                what        = c('rname', 'pos', 'qwidth', 'strand', 'seq'),
+		   	            which       = which )
 
 	}
 	rawData <- scanBam( filename, param = param )
@@ -70,7 +65,7 @@ readSortedBam <- function( filename, which ) {
 
 	sortedBam <- lapply( rawData, function(rawDataChr) with( rawDataChr, GRanges( seqnames = rname, 
 			                                                              ranges   = IRanges( start = pos, width = qwidth ),
-		                                                                      strand   = strand,
+		                                                                  strand   = strand,
 			                                                              qseq     = seq,
 			                                                              tag      = tag ) ) )
 	sortedBam <- GRangesList( sortedBam )
