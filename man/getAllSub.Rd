@@ -45,7 +45,7 @@ countTable <- getAllSub( example, minCov = 10, cores = 1 )
 countTable
 }
 \author{
-Federico Comoglio and Cem Sievers
+Federico Comoglio and Cem Sievers, with contributions from Martin Morgan
 }
 \seealso{
 \code{\link{readSortedBam}}

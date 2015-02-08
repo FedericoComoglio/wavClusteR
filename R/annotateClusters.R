@@ -43,8 +43,8 @@
 #' Morgan and D. Sarkar and M. Lawrence, GenomicFeatures: Tools for making and
 #' manipulating transcript centric annotations, R package version 1.12.4
 #' 
-#' Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for PAR-CLIP
-#' data analysis, submitted
+#' Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
+#' of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 #' @keywords postprocessing graphics
 #' @examples
 #' 

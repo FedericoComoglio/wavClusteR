@@ -1,4 +1,4 @@
-#2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
+#2015 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
 
 #' Estimate False Discovery Rate within the relative substitution frequency
 #' support by integrating PAR-CLIP data and RNA-Seq data
@@ -37,8 +37,8 @@
 #' conservative. See supplementary information in Comoglio et al. for details.
 #' @author Federico Comoglio and Cem Sievers
 #' @seealso \code{\link{readSortedBam}}, \code{\link{getAllSub}}
-#' @references Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for
-#' PAR-CLIP data analysis, submitted
+#' Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
+#' of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 #' @keywords core graphics
 #' @export estimateFDR
 

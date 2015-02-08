@@ -178,7 +178,8 @@ computelogOdds <- function( model ) {
 #' sites in MOV10 PAR-CLIP data, Nucleic Acids Res. 40(20):e160. doi:
 #' 10.1093/nar/gks697
 #' 
-#' Comoglio F, Sievers C and Paro R.
+#' Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
+#' of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 #' 
 #' @keywords core
 #' @examples

@@ -8,7 +8,7 @@
 model densities. See the help page of the \link{fitMixtureModel} function
 for a detailed description of the output.}
 \usage{
-data(model) 
+data(model)
 model
 }
 \description{
