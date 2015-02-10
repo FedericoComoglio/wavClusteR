@@ -72,8 +72,11 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 #   ...
 
      mds <- names( chunk )
-	strands <- unname( strand( chunk ) )	
-	strands <- lapply( strands, as.character )
+	 strands <- unname( strand( chunk ) )	
+	 strands <- lapply( strands, as.character )
+	 snames <- unname( seqnames( chunk ) )
+	 snames <- lapply( snames, as.character )
+	 
 
      ## Match a nucleotide preceed by a digit (returns list)
      mdsSplit <- regmatches( mds, gregexpr( '\\d*|[ACGTN]{1}', mds) )
@@ -112,12 +115,13 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 	##5-Get strand information right
 	strands <- unlist( lapply( seq_len( length( mismatched_n ) ), 
 		function( i ) rep( strands[[ i ]], each = mismatched_n[ i ] ) ) )
-
+	snames <- unlist( lapply( seq_len( length( mismatched_n ) ), 
+			function( i ) rep( snames[[ i ]], each = mismatched_n[ i ] ) ) )
      ##6-Prepare output
      DataFrame(
          chunkIdx = rep(seq_along(chunk), mismatched_n * chunk_n),
          readIdx  = rep(seq_along(qseq), rep(mismatched_n, chunk_n)),
-         seqnames = unlist(unname(rep(seqnames(chunk), mismatched_n))),
+         seqnames = snames, #unlist(unname(rep(seqnames(chunk), mismatched_n)))
          posMismatchesGenome = unlist(unname(posMismatchesGenome)),
          strand   = strands,
          substitutions = subst)
