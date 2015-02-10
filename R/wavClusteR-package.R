@@ -21,26 +21,9 @@
 #' @keywords datasets
 NULL
 
-
-
-
-
-#' An R package for the analysis of Next-Generation Sequencing data obtained
-#' from PAR-CLIP or other substitution-inducing experimental procedures.
-#' 
-#' Infer PAR-CLIP induced transitions and discriminate them from sequencing
-#' error, SNPs, contaminants and additional non-experimental causes, using a
-#' non-parametric mixture model. wavClusteR resolves cluster boundaries at high
-#' resolution and provides robust estimation of cluster statistics. In
-#' addition, the package allows to integrate RNA-Seq data to estimate FDR over
-#' the entire range of relative substitution frequencies. Furthermore, the
-#' package provides post-processing of results and functions to export results
-#' for UCSC genome browser visualization and motif search analysis. Key
-#' functions support parallel multicore computing. While wavClusteR was
-#' designed for PAR-CLIP data analysis, it can be applied to the analysis of
-#' other Next-Generation Sequencing data obtained from substitution inducing
-#' experimental procedures (e.g. BisSeq)
-#' 
+#'
+#' A comprehensive pipeline for the analysis of PAR-CLIP data. PAR-CLIP-induced #'transitions are first discriminated from sequencing errors, SNPs and additional non-#'experimental sources by a non-parametric mixture model. The protein binding sites #'(clusters) are then resolved at high resolution and cluster statistics are estimated #'using a rigorous Bayesian framework. Post-processing of the results, data export for #'UCSC genome browser visualization and motif search analysis are provided. In addition, #'the package allows to integrate RNA-Seq data to estimate the False Discovery Rate of #'cluster detection.  Key functions support parallel multicore computing. Note: while #'wavClusteR was designed for PAR-CLIP data analysis, it can be applied to the analysis of #'other NGS data obtained from experimental procedures that induce nucleotide #'substitutions (e.g. BisSeq).#' 
+#'
 #' \tabular{ll}{ Package: \tab wavClusteR\cr Type: \tab Package\cr Version:
 #' \tab 1.99.3\cr Date: \tab 2015-15-01\cr License: \tab GPL-2\cr }
 #' 
