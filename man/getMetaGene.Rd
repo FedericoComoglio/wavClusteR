@@ -85,11 +85,11 @@ fclusters <- filterClusters( clusters = clusters,
 }
 \author{
 Federico Comoglio
+
+Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
+of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 }
 \references{
-Comoglio F, Sievers C and Paro R, Sensitive and highly resolved identification
-of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
-
 Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for
 PAR-CLIP data analysis, submitted
 }

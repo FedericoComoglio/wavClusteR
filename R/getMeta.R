@@ -242,7 +242,7 @@ getMetaGene <- function( clusters, txDB = NULL, upstream = 1e3, downstream = 1e3
 
 	#3-extract upstream/downstream region
 	suppressWarnings( upstreamFlank <- flank( gn, upstream, start = TRUE ) )
-	suppressWarnings( downstreamFlank <- flank( gn, downstream, start = TRUE ) )
+	suppressWarnings( downstreamFlank <- flank( gn, downstream, start = FALSE ) )
 
 	#4-construct bins
 	chrs <- seqnames( gn )

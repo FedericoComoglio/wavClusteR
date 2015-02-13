@@ -57,12 +57,10 @@ conservative. See supplementary information in Comoglio et al. for details.
 \author{
 Federico Comoglio and Cem Sievers
 }
-\references{
-Comoglio F, Sievers C and Paro R, Sensitive and highly resolved identification
-of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
-}
 \seealso{
 \code{\link{readSortedBam}}, \code{\link{getAllSub}}
+Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
+of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 }
 \keyword{core}
 \keyword{graphics}
