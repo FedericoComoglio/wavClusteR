@@ -59,8 +59,6 @@ estimateP <- function( countTableSplit ) {
 }
 
 
-
-
 #' Fit a non-parametric mixture model from all identified substitutions
 #' 
 #' Estimates the two-component mixture model consisting of the mixing
@@ -99,6 +97,7 @@ estimateP <- function( countTableSplit ) {
 #' getExpInterval( model, bayes = TRUE, plot = TRUE )
 #' 
 #' @export fitMixtureModel
+
 fitMixtureModel <- function( countTable, substitution = 'TC' ) {
 # Error handling
 #   ...
