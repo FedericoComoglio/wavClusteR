@@ -16,7 +16,7 @@
 #' @param clusters GRanges object containing individual clusters as identified
 #' by the \link{getClusters} function
 #' @param txDB TranscriptDb object obtained through a call to the
-#' \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures}
+#' \code{makeTxDbFromUCSC} function in the \code{GenomicFeatures}
 #' package. Default is NULL, namely the object will be fetched internally
 #' @param genome A character specifying the genome abbreviation used by UCSC.
 #' Available abbreviations are returned by a call to \code{ucscGenomes()[ ,
@@ -91,7 +91,7 @@ annotateClusters <- function( clusters, txDB = NULL, genome = 'hg19', tablename 
 	if( is.null( txDB ) ) {
 		if(verbose)
 			message( 'Creating TranscriptDb object...' )
-		txDB <- makeTranscriptDbFromUCSC(genome = genome, tablename = tablename)
+		txDB <- makeTxDbFromUCSC(genome = genome, tablename = tablename)
 	}
 	
 	#2-obtaining CDS, introns, 3' and 5'-UTRs from the TranscriptDb object, make them unique and compute their length

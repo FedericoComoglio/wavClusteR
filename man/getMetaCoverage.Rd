@@ -14,7 +14,7 @@ getMetaCoverage(clusters, txDB = NULL, upstream = 1e3, downstream =
 by the \link{getClusters} function}
 
 \item{txDB}{TranscriptDb object obtained through a call to the
-\code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures}
+\code{makeTxDbFromUCSC} function in the \code{GenomicFeatures}
 package. Default is NULL, namely the object will be fetched internally}
 
 \item{upstream}{An integer corresponding to the number of bases to be
