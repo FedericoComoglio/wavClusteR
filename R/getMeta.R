@@ -13,7 +13,7 @@
 #' @param sortedBam GRanges object containing aligned reads as returned by
 #' \link{readSortedBam}
 #' @param txDB TranscriptDb object obtained through a call to the
-#' \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures}
+#' \code{makeTxDbFromUCSC} function in the \code{GenomicFeatures}
 #' package. Default is NULL, namely the object will be fetched internally
 #' @param upstream An integer corresponding to the number of bases to be
 #' considered upstream the TSS. Default is 1000
@@ -70,7 +70,7 @@ getMetaTSS <- function( sortedBam, txDB = NULL, upstream = 1e3, downstream = 1e3
 	if( is.null( txDB ) ) {
 		if(verbose)
 			message( 'Creating TranscriptDb object...' )
-		txDB <- makeTranscriptDbFromUCSC(genome = genome, tablename = tablename)
+		txDB <- makeTxDbFromUCSC(genome = genome, tablename = tablename)
 	}
 
 	#2-extract genes from annotations
@@ -151,7 +151,7 @@ getMetaTSS <- function( sortedBam, txDB = NULL, upstream = 1e3, downstream = 1e3
 #' @param clusters GRanges object containing individual clusters as identified
 #' by the \link{getClusters} function
 #' @param txDB TranscriptDb object obtained through a call to the
-#' \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures}
+#' \code{makeTxDbFromUCSC} function in the \code{GenomicFeatures}
 #' package. Default is NULL, namely the object will be fetched internally
 #' @param upstream An integer corresponding to the number of bases to be
 #' considered upstream the gene. Default is 1000
@@ -231,7 +231,7 @@ getMetaGene <- function( clusters, txDB = NULL, upstream = 1e3, downstream = 1e3
 	if( is.null( txDB ) ) {
 		if(verbose)
 			message( 'Creating TranscriptDb object...' )
-		txDB <- makeTranscriptDbFromUCSC(genome = genome, tablename = tablename)
+		txDB <- makeTxDbFromUCSC(genome = genome, tablename = tablename)
 	}
 
 	#2-extract genes from annotations and retain only those passing the minLength cutoff
@@ -344,7 +344,7 @@ getMetaGene <- function( clusters, txDB = NULL, upstream = 1e3, downstream = 1e3
 #' @param clusters GRanges object containing individual clusters as identified
 #' by the \link{getClusters} function
 #' @param txDB TranscriptDb object obtained through a call to the
-#' \code{makeTranscriptDbFromUCSC} function in the \code{GenomicFeatures}
+#' \code{makeTxDbFromUCSC} function in the \code{GenomicFeatures}
 #' package. Default is NULL, namely the object will be fetched internally
 #' @param upstream An integer corresponding to the number of bases to be
 #' considered upstream the gene. Default is 1000
@@ -419,7 +419,7 @@ getMetaCoverage <- function( clusters, txDB = NULL, upstream = 1e3, downstream =
 	if( is.null( txDB ) ) {
 		if(verbose)
 			message( 'Creating TranscriptDb object...' )
-		txDB <- makeTranscriptDbFromUCSC(genome = genome, tablename = tablename)
+		txDB <- makeTxDbFromUCSC(genome = genome, tablename = tablename)
 	}
 
 	#2-extract genes from annotations and retain only those passing the minLength cutoff

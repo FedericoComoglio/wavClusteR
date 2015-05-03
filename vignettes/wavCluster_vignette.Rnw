@@ -304,9 +304,9 @@ exportCoverage( coverage = coverage, filename = "coverage.bigWig" )
 \subsection{wavClusters annotation} 
 %%--------------------------------------------------
 
-The identified wavClusters can be annotated with respect to known genomic features using the \Rfunction{annotateClusters} function, which generates a strand-specific dot chart representing wavClusters annotation. The function takes as an input the wavClusters and a \Robject{transcriptDB} object containing all transcript annotations. The latter can either be generated a priori using the \Rfunction{makeTranscriptDbFromUCSC} (from the \Rpackage{GenomicFeatures} package) or is automatically fetch and built by \Rfunction{annotateClusters} if not provided. If multiple calls to  \Rfunction{annotateClusters} are planned, the recommended solution is to build the object once as
+The identified wavClusters can be annotated with respect to known genomic features using the \Rfunction{annotateClusters} function, which generates a strand-specific dot chart representing wavClusters annotation. The function takes as an input the wavClusters and a \Robject{transcriptDB} object containing all transcript annotations. The latter can either be generated a priori using the \Rfunction{makeTxDbFromUCSC} (from the \Rpackage{GenomicFeatures} package) or is automatically fetch and built by \Rfunction{annotateClusters} if not provided. If multiple calls to  \Rfunction{annotateClusters} are planned, the recommended solution is to build the object once as
 <<echo = TRUE, eval = FALSE>>=
-txDB <- makeTranscriptDbFromUCSC(genome = "hg19", tablename = "ensGene")
+txDB <- makeTxDbFromUCSC(genome = "hg19", tablename = "ensGene")
 @
 Then, the \Rfunction{annotateClusters} can be called as follows
 <<echo = TRUE, eval = FALSE>>=
