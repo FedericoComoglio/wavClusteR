@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="wavClusteR : An R/BioConductor package for PAR-CLIP data analysis">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-    <title>wavClusteR</title>
+    <title>wavClusteR by FedericoComoglio</title>
   </head>
 
   <body>
+    <header>
+      <div class="inner">
+        <h1>wavClusteR</h1>
+        <h2>An R/BioConductor package for PAR-CLIP data analysis</h2>
+        <a href="https://github.com/FedericoComoglio/wavClusteR" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/FedericoComoglio/wavClusteR">View on GitHub</a>
-
-          <h1 id="project_title">wavClusteR</h1>
-          <h2 id="project_tagline">An R/BioConductor package for PAR-CLIP data analysis</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/FedericoComoglio/wavClusteR/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/FedericoComoglio/wavClusteR/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h2>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h2>
 <a id="background" class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h2>
 
 <h2>
@@ -49,7 +46,7 @@
 <p>wavClusteR is an R/BioConductor package for PAR-CLIP data analysis can be used to:</p>
 
 <ul>
-<li>Infer PAR-CLIP induced transitions and discriminate them from sequencing errors, SNPs, contaminants and additional non-experimental causes, using a non-parametric mixture model (Sievers et al, 2012).</li>
+<li>Infer PAR-CLIP induced transitions and discriminate them from sequencing errors, SNPs, contaminants and additional non-experimental causes, using a non-parametric mixture model (Sievers et al, 2012; Comoglio et al, 2015).</li>
 <li>Resolve protein binding sites (clusters) at high resolution.</li>
 <li>Rank clusters for downstream analyses and validation based on a solid statistical framework.</li>
 <li>Integrate total RNA-Seq data, if available, to estimate false discovery rates.</li>
@@ -59,29 +56,24 @@
 <p>The package <em>supports multicore computing</em>. While wavClusteR was designed for PAR-CLIP data analysis, it can be adapted to the analysis of other NGS data from experimental procedures exploting nucleotide substitutions for site detection (e.g. BisSeq). </p>
 
 <h2>
-<a id="version" class="anchor" href="#version" aria-hidden="true"><span class="octicon octicon-link"></span></a>Version</h2>
-
-<p>Current stable version is 2.0</p>
-
-<h2>
 <a id="download-and-installation" class="anchor" href="#download-and-installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download and Installation</h2>
 
 <p>To install wavClusteR from BioConductor, start R (&gt;3.1.0) and enter:</p>
 
-<div class="highlight highlight-R"><pre>source(<span class="pl-s1"><span class="pl-pds">"</span>http://bioconductor.org/biocLite.R<span class="pl-pds">"</span></span>)
-biocLite(<span class="pl-s1"><span class="pl-pds">"</span>wavClusteR<span class="pl-pds">"</span></span>)</pre></div>
+<div class="highlight highlight-source-r"><pre>source(<span class="pl-s"><span class="pl-pds">"</span>http://bioconductor.org/biocLite.R<span class="pl-pds">"</span></span>)
+biocLite(<span class="pl-s"><span class="pl-pds">"</span>wavClusteR<span class="pl-pds">"</span></span>)</pre></div>
 
-<p>To install the latest (devel) version of the package, either install it from BioC devel or directly from this GitHub repository with:</p>
+<p>To install the package directly from this repository, type:</p>
 
-<div class="highlight highlight-R"><pre>library(<span class="pl-vo">devtools</span>)
-install_github(<span class="pl-v">repo</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>FedericoComoglio/wavClusteR<span class="pl-pds">'</span></span>)</pre></div>
+<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">devtools</span>)
+install_github(<span class="pl-v">repo</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>FedericoComoglio/wavClusteR<span class="pl-pds">'</span></span>)</pre></div>
 
 <h2>
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h2>
 
 <p>The package provides a vignette detailing all steps required to analyze your PAR-CLIP data. To view this document for the version of wavClusteR installed in your system, start R and enter:</p>
 
-<div class="highlight highlight-R"><pre>browseVignettes(<span class="pl-s1"><span class="pl-pds">"</span>wavClusteR<span class="pl-pds">"</span></span>)</pre></div>
+<div class="highlight highlight-source-r"><pre>browseVignettes(<span class="pl-s"><span class="pl-pds">"</span>wavClusteR<span class="pl-pds">"</span></span>)</pre></div>
 
 <h2>
 <a id="citation" class="anchor" href="#citation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Citation</h2>
@@ -96,7 +88,7 @@ install_github(<span class="pl-v">repo</span> <span class="pl-k">=</span> <span 
 </ul>
 
 <h2>
-<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h2>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Issues</h2>
 
 <p>Should you</p>
 
@@ -106,19 +98,28 @@ install_github(<span class="pl-v">repo</span> <span class="pl-k">=</span> <span 
 <li>have specific operating system requirements</li>
 </ul>
 
-<p>please do not hesitate to contact me @ <a href="mailto:federico.comoglio@bsse.ethz.ch">federico.comoglio@bsse.ethz.ch</a></p>
-      </section>
+<p>Please post a new topic on the Bioconductor support site <a href="https://support.bioconductor.org">https://support.bioconductor.org</a> using wavClusteR as a tag. See <a href="https://www.bioconductor.org/help/support/">https://www.bioconductor.org/help/support/</a> for more details.</p>
+
+<p>If required, please do not hesitate to contact me @ <a href="mailto:federico.comoglio@gmail.com">federico.comoglio@gmail.com</a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/FedericoComoglio/wavClusteR/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/FedericoComoglio/wavClusteR/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/FedericoComoglio/wavClusteR"></a> is maintained by <a href="https://github.com/FedericoComoglio">FedericoComoglio</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">wavClusteR maintained by <a href="https://github.com/FedericoComoglio">FedericoComoglio</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
+  
   </body>
 </html>
