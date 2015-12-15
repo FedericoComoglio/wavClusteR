@@ -5,8 +5,9 @@ Version: 2.5.0
 Date: 2015-13-02
 Depends: R (>= 3.0.0), GenomicRanges, Rsamtools
 Imports: Biostrings, foreach, GenomicFeatures, ggplot2, Hmisc, IRanges, mclust, rtracklayer, seqinr, stringr, wmtsa
-Suggests: BSgenome.Hsapiens.UCSC.hg19
+Suggests: knitr, BSgenome.Hsapiens.UCSC.hg19
 Enhances: doMC
+VignetteBuilder: knitr
 Author: Federico Comoglio and Cem Sievers
 Maintainer: Federico Comoglio <federico.comoglio@gmail.com>
 Description: The package provides an integrated pipeline for the analysis of PAR-CLIP data. PAR-CLIP-induced transitions are first discriminated from sequencing errors, SNPs and additional non-experimental sources by a non-parametric mixture model. The protein binding sites (clusters) are then resolved at high resolution and cluster statistics are estimated using a rigorous Bayesian framework. Post-processing of the results, data export for UCSC genome browser visualization and motif search analysis are provided. In addition, the package allows to integrate RNA-Seq data to estimate the False Discovery Rate of cluster detection.  Key functions support parallel multicore computing. Note: while wavClusteR was designed for PAR-CLIP data analysis, it can be applied to the analysis of other NGS data obtained from experimental procedures that induce nucleotide substitutions (e.g. BisSeq).
