@@ -13,7 +13,7 @@ vignette: >
 
 A number of recently developed next-generation sequencing based methods (e.g. PAR-CLIP, Bisulphite sequencing, RRBS) specifically induce nucleotide substitutions within the short reads with respect to the reference genome. **wavClusteR** provides functions for the analysis of the data obtained by such methods with a major focus on PAR-CLIP. The package leverages on experimentally induced substitutions to identify high confidence signals (e.g. RNA-binding sites) in the data. A **wavClusteR** workflow consists of two steps:
 
-1. The estimation of a non-parametric two-component mixture model to identify substitution frequencies most likely to be affected by the experimental procedure
+1. The estimation of a non-parametric two-component mixture model to identify substitution frequencies that are likely to be affected by the experimental procedure
 2. The identification of binding sites (clusters).
 
 The package supports multicore computing. For a detailed description of the method please refer to [Sievers et al., 2012](http://www.ncbi.nlm.nih.gov/pubmed/22844102); [Comoglio et al., 2015](http://www.ncbi.nlm.nih.gov/pubmed/25638391).
@@ -21,7 +21,7 @@ The package supports multicore computing. For a detailed description of the meth
 
 ## Preparing the input
 
-**wavClusteR** expects a sorted and index BAM file as input. A streamlined workflow to generate the required input from a fastq file is outlined below (line 1 is pseudo code, replace it with the aligner specific syntax).
+**wavClusteR** expects a sorted and indexed BAM file as input. A streamlined workflow to generate the required input from a fastq file is outlined below (line 1 is pseudo code, replace it with the aligner specific syntax).
 
 ```{r eval=FALSE}
 	#ALIGN: 
@@ -34,15 +34,15 @@ The package supports multicore computing. For a detailed description of the meth
 		samtools index sample_sorted.bam
 ```
 
-1. Short read alignment to the reference genome using relaxed alignment parameters. Experimentally-induced transitions will otherwise hamper alignment of informative reads. Currently, **wavClusteR** has been tested with bowtie/Bowtie2 [Langmead et al., 2009](http://www.ncbi.nlm.nih.gov/pubmed/19261174); [Langmead and Salzberg, 2012](http://www.ncbi.nlm.nih.gov/pubmed/22388286)
-2. Conversion of the alignment file from SAM to BAM format, e.g. using the ```samtools view``` utility from [SAMtools](http://samtools.sourceforge.net)
+1. Short read alignment to the reference genome using relaxed alignment parameters. Experimentally-induced transitions will otherwise impede alignment of informative reads. Currently, **wavClusteR** has been tested with bowtie/Bowtie2 [Langmead et al., 2009](http://www.ncbi.nlm.nih.gov/pubmed/19261174); [Langmead and Salzberg, 2012](http://www.ncbi.nlm.nih.gov/pubmed/22388286)
+2. Conversion of the alignment file from SAM to BAM format, e.g. using ```samtools view``` from [SAMtools](http://samtools.sourceforge.net)
 3. Sorting of the BAM file, e.g. using ```samtools sort```
 4. Indexing of the sorted BAM file, e.g. with ```samtools index```.
 
 
 ###Example dataset
 
-**wavClusteR** provides a chunk of a human Argonaute 2 (AGO2) PAR-CLIP data set from [Kishore et al., 2011](http://www.ncbi.nlm.nih.gov/pubmed/?term=kishore+2011+argonaute). Reads in the chunk map to the genomic interval [chrX:23996166-24023263]. This data set is used in the following sections to illustrate a workflow for PAR-CLIP data analysis.
+**wavClusteR** provides a chunk of a human Argonaute 2 (AGO2) PAR-CLIP data set from [Kishore et al., 2011](http://www.ncbi.nlm.nih.gov/pubmed/?term=kishore+2011+argonaute). Reads in the chunk map to the genomic interval chrX:23996166-24023263. This data set is used below to illustrate a workflow for PAR-CLIP data analysis.
 
 ##A workflow for PAR-CLIP data analysis
 
@@ -108,7 +108,7 @@ str(model)
 
 The model fit can be inspected using **getExpInterval**. 
 
-```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
+```{r fig.width=7, fig.height=4.5, fig.align='center', eval=TRUE}
 (support <- getExpInterval( model, bayes = TRUE ) )
 ```
 
@@ -122,7 +122,7 @@ The second plot shows the resulting posterior class probability, i.e. the probab
 
 1. By means of the **rightProb** and **leftProb** parameters, e.g.
 
-	```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
+	```{r fig.width=7, fig.height=4.5, fig.align='center', eval=TRUE}
 	(support <- getExpInterval( model, bayes = FALSE, leftProb = 0.9, rightProb = 	0.9 ) )
 	```
 
@@ -130,7 +130,7 @@ The second plot shows the resulting posterior class probability, i.e. the probab
 
 Finally, the model can be used to produce further diagnostic plots. Particularly,  the total number of reads exhibitng a given substitution and an RSF-based partitioning of genomic positions with substitutions can be obtained by
 
-```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
+```{r fig.width=7, fig.height=5, fig.align='center', eval=TRUE}
 plotSubstitutions( countTable, highlight = "TC", model )
 ```
 
@@ -238,7 +238,7 @@ The relative log odds can be used to rank clusters according to statistical conf
 **wavClusteR** provides a number of functions (summarized in the table below) for post-processing of the identified binding sites.
 
 Task  | Function | Output format |
-------------- | ------------- | ------------- |
+---------------------------- | ------------------- | ----------------- |
 Export all substitutions/high-confidence substitutions | **exportHighConfSub** | BED 
 Export clusters | **exportClusters** | BED 
 Export coverage function | **exportCoverage** | BigWig
