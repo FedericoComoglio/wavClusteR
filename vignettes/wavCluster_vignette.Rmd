@@ -1,15 +1,17 @@
 ---
-title: "wavClusteR Package Vignette"
+title: "wavClusteR: sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data"
 author: "Federico Comoglio and Cem Sievers"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+package: "`r pkg_ver('BiocStyle')`"
 vignette: >
-    %\VignetteIndexEntry{wavClusteR}
+    %\VignetteIndexEntry{wavClusteR: sensitive and highly resolved identification of RNA-protein interaction sites in PAR-CLIP data}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
+output: 
+  BiocStyle::html_document
 ---
 
-## Abstract
+##Abstract
 
 A number of recently developed next-generation sequencing based methods (e.g. PAR-CLIP, Bisulphite sequencing, RRBS) specifically induce nucleotide substitutions within the short reads with respect to the reference genome. **wavClusteR** provides functions for the analysis of the data obtained by such methods with a major focus on PAR-CLIP. The package leverages on experimentally induced substitutions to identify high confidence signals (e.g. RNA-binding sites) in the data. A **wavClusteR** workflow consists of two steps:
 
@@ -17,7 +19,6 @@ A number of recently developed next-generation sequencing based methods (e.g. PA
 2. The identification of binding sites (clusters).
 
 The package supports multicore computing. For a detailed description of the method please refer to [Sievers et al., 2012](http://www.ncbi.nlm.nih.gov/pubmed/22844102); [Comoglio et al., 2015](http://www.ncbi.nlm.nih.gov/pubmed/25638391).
-
 
 ## Preparing the input
 
