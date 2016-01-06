@@ -64,29 +64,49 @@ vignette: >
 
 ## Abstract
 
-Different recently developed next-generation sequencing based methods (e.g. PAR-CLIP or Bisulphite sequencing) specifically induce nucleotide substitutions within the short reads with respect to the reference genome. This package provides functions for the analysis of the data obtained by such methods - with a major focus on PAR-CLIP - and exploits the experimentally induced substitutions in order to identify high confidence signals, such as RNA-binding sites, in the data. The workflow consists of two steps; (i) the estimation of a non-parametri two-component mixture model, identifying substitution frequencies most affected by the experimental procedure; (ii) a binding sites (clusters) identification algorithm which resolves clusters at high resolution. Key functions support multicore computing, if available. For a detailed description of the method see (Sievers et al., 2012; Comoglio et al., 2015).
+A number of recently developed next-generation sequencing based methods (e.g. PAR-CLIP, Bisulphite sequencing, RRBS) specifically induce nucleotide substitutions within the short reads with respect to the reference genome. **wavClusteR** provides functions for the analysis of the data obtained by such methods with a major focus on PAR-CLIP. The package leverages on experimentally induced substitutions to identify high confidence signals (e.g. RNA-binding sites) in the data. A **wavClusteR** workflow consists of two steps:
+
+1. The estimation of a non-parametric two-component mixture model to identify substitution frequencies most likely to be affected by the experimental procedure
+2. The identification of binding sites (clusters).
+
+The package supports multicore computing. For a detailed description of the method please refer to [Sievers et al., 2012](http://www.ncbi.nlm.nih.gov/pubmed/22844102); [Comoglio et al., 2015](http://www.ncbi.nlm.nih.gov/pubmed/25638391).
 
 
 ## Preparing the input
 
-Starting with a fastq file, a commonly used short read format, the short reads should be aligned to the reference genome using a short read aligner, e.g. Bowtie/Bowtie2 (Langmead et al., 2009). The output file (e.g. in SAM format) should then be converted to BAM format (e.g. using [samtools view](http://samtools.sourceforge.net/samtools.shtml) and sorted (e.g. using samtools sort). Since wavClusteR requires an indexed BAM file containing the short read alignments, a BAM index file should be generated from the sorted BAM file (see, e.g. samtools index).
-The following code provides an example of the steps described above using the samtools toolkit. The first line is pseudo code. Please replace it with the aligner specific syntax.
+**wavClusteR** expects a sorted and index BAM file as input. A streamlined workflow to generate the required input from a fastq file is outlined below (line 1 is pseudo code, replace it with the aligner specific syntax).
 
 ```{r eval=FALSE}
-	ALIGN: sample.fastq -> sample.sam
-	CONVERT: samtools view -b -S sample.sam  -o sample.bam
-	SORT: samtools sort sample.bam sample_sorted
-	INDEXING: samtools index sample_sorted.bam
+	#ALIGN: 
+		sample.fastq -> sample.sam
+	#CONVERT: 
+		samtools view -b -S sample.sam -o sample.bam
+	#SORT: 
+		samtools sort sample.bam sample_sorted
+	#INDEXING: 
+		samtools index sample_sorted.bam
 ```
+
+1. Short read alignment to the reference genome using relaxed alignment parameters. Experimentally-induced transitions will otherwise hamper alignment of informative reads. Currently, **wavClusteR** has been tested with bowtie/Bowtie2 [Langmead et al., 2009](http://www.ncbi.nlm.nih.gov/pubmed/19261174); [Langmead and Salzberg, 2012](http://www.ncbi.nlm.nih.gov/pubmed/22388286)
+2. Conversion of the alignment file from SAM to BAM format, e.g. using the ```samtools view``` utility from [SAMtools](http://samtools.sourceforge.net)
+3. Sorting of the BAM file, e.g. using ```samtools sort```
+4. Indexing of the sorted BAM file, e.g. with ```samtools index```.
+
 
 ###Example dataset
 
-In this vignette, we consider as an example a chunk of a published Argonaute 2 (AGO2) PAR-CLIP data set obtained from human HEK293 cells (Kishore et al., 2011). This chunk contains reads mapping to chromosome X in the interval: 23996166 - 24023263. This data set is locally provided by wavClusteR.
+**wavClusteR** provides a chunk of a human Argonaute 2 (AGO2) PAR-CLIP data set from [Kishore et al., 2011](http://www.ncbi.nlm.nih.gov/pubmed/?term=kishore+2011+argonaute). Reads in the chunk map to the genomic interval [chrX:23996166-24023263]. This data set is used in the following sections to illustrate a workflow for PAR-CLIP data analysis.
 
-###Importing short reads into the R session
+##A workflow for PAR-CLIP data analysis
 
+###1. Reading sorted BAM files
+
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 An indexed BAM file can be loaded into the R session using the readSortedBam function. This calls scanBam from Rsamtools and extracts the mismatch MD field and the read sequence from the BAM file, returning a GRanges object.
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+A sorted and indexed BAM file can be loaded into the R session with **readSortedBam**. This function extracts aligned reads, sequences and the mismatch MD field, and returns a GRanges object. 
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=TRUE}
 library(wavClusteR)
@@ -95,6 +115,7 @@ Bam <- readSortedBam(filename = filename)
 Bam
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 ##Extracting informative genomic positions
 
@@ -105,20 +126,32 @@ Prior to model fitting, genome-wide substitutions need to be identified and filt
 To estimate the mixture model both mixing coefficients and density functions (components) have to be estimated from the data. To this purpose, genome-wide substitutions are first identified and filtered according to a minimum coverage value at substitutions. The minimum coverage, which should be chosen to account for variables such as sequencing depth, provides a way to select the positions used for parameter estimation. Hence, it can be used to tune the stringency of the analysis. There is no obvious theoretical justification to find the optimal minimum coverage. However since relative substitution frequencies have to be computed for parameter estimation, the minimum coverage will influence the variance of the estimate. The lowest minimum coverage used for our analysis was 10.
 The getAllSub function identifies the genomic positions that show at least one substitution and satisfy the minimum coverage requirement. It returns a GRanges object specifying the genomic position, the strand, the observed substitution (e.g. "TC" implies a T in the reference genome and a C in the read), the strand-specific coverage and the number of observed substitutions at the specific position.
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+###2. Extracting informative genomic positions
+
+Prior to model fitting, genome-wide substitutions need to be identified and filtered based on a coverage threshold. The **getAllSub** function identifies all genomic positions exhibiting at least one substitution and coverage above this threshold.
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=TRUE}
 countTable <- getAllSub( Bam, minCov = 10 )
 head( countTable )
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 The function returns a GRanges object specifying genomic position, strand, substitution type (e.g. "TC": T in the reference genome; C in the read), strand-specific coverage and number of observed substitutions at the position.
 
 ###How to choose the coverage threshold ?
+=======
+The function returns a GRanges object specifying genomic position, strand, substitution type (e.g. "TC": T in the reference genome; C in the read), strand-specific coverage and number of observed substitutions at the position.
+
+####How to choose the coverage threshold ?
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 The coverage threshold ```minCov``` defines the genomic positions to be used for parameter estimation, thus providing a means to tune the stringency of the analysis. Currently, **wavClusteR** does not allow to learn this threshold from the data. However, since the model is based on relative substitution frequencies, the value of ```minCov``` will influence the variance of the estimated parameters. Therefore, values smaller than default (```minCov=10```) are not recommended. 
 
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 ##Inspecting the substitions profile (diagnostic I)
 
 Once all substitutions are computed, a diagnostic substitution profile can be plotted with **plotSubstitutions**. 
@@ -126,11 +159,17 @@ Once all substitutions are computed, a diagnostic substitution profile can be pl
 Once all substitutions are computed, the corresponding substitution profile can be plotted with plotSubstitutions. This function returns a barplot showing the total number of genomic positions that exhibit a given type of substitution and highlights the substitution type that is expected to be generated by the experimental procedure. In addition, the percentage of substitution of this type with respect to all identified substitutions is indicated. This plot conveys information about the quality of the data and can be used to compare different data sets generated by the same experimental conditions.
 %
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+###3. Inspecting the substitions profile (diagnostic I)
+
+Once all substitutions are computed, a diagnostic substitution profile can be plotted with **plotSubstitutions**. 
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
 plotSubstitutions( countTable, highlight = "TC" )
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 The function returns a barplot showing the total number of genomic positions that exhibit a given type of substitution and highlights the substitution type that is expected to be generated by the experimental procedure. The percentage of substitution of this type is also shown. This plot can be readily used to assess the quality of the sequenced libraries and can be used to compare different data sets generated under the same experimental condition.
 
@@ -141,20 +180,28 @@ The function returns a barplot showing the total number of genomic positions tha
 ##Estimating the non-parametric mixture model
 
 The genomic positions identified above (see getAllSub) are used to estimate the mixture model densities and mixing coefficients. The estimation is performed by the function fitMixtureModel for the substitution of interest. The function returns a list containing:
+=======
+The function returns a barplot showing the total number of genomic positions that exhibit a given type of substitution and highlights the substitution type that is expected to be generated by the experimental procedure. The percentage of substitution of this type is also shown. This plot can be readily used to assess the quality of the sequenced libraries and can be used to compare different data sets generated under the same experimental condition.
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
-+ the two mixing coefficients (l1 and l2)
-+ the two individual components (p1 and p2)
-+ the full density (p)
+###4. Estimating the model
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 Given an observed relative substitution frequency, the model is used to compute the posterior probability that it was obtained by experimental induction.
 Given the GRanges object countTable the model can be estimated as follows:
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+**wavClusteR** uses the identified genomic positions to learn a non-parametric mixture model discriminating PAR-CLIP-specific from extrinsic transitions. Model parameters are estimated by **fitMixtureModel**
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=FALSE}
 model <- fitMixtureModel(countTable, substitution = "TC")
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
+=======
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 The function returns a list of:
 
 + the two mixing coefficients (**l1** and **l2**)
@@ -162,15 +209,19 @@ The function returns a list of:
 + the full density (**p**)
 
 As the small size of our example data set does not to estimate the model reliably, the mixture model for the entire AGO2 dataset has been precomputed and is provided by the package.
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 =======
 The small size of the example dataset would not allow a reliable model estimation. Therefore, the mixture model for the entire AGO2 dataset has been precomputed and is provided by wavClusteR for convenience. The model can be loaded by
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=TRUE}
 data(model)
 str(model)
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 ##Inspecting the model fit (diagnostic II)
 
@@ -207,42 +258,52 @@ plotSubstitutions( countTable, highlight = "TC", model )
 The RSF support is used to filter all observed transitions to define a set of high-confidence, PAR-CLIP induced transitions. These are identified by **getHighConfSub**. The function returns a GRanges object with genomic position, strand, strand-specific coverage, occurence (count), and relative substitution frequency (rsf) for each high-confidence substitution. In a call to **getHighConfSub**, the RSF interval returned by **getExpInterval** can be supplied as ```support``` argument directly
 =======
 Once the mixture model is estimated, the model fit can be inspected and the RSF interval most likely to be affected by the experimental procedure can be identified using the getExpInterval function. Besides then high-confidence RSF interval, two plots are returned. The first one illustrates the estimated densities p, p_1 and p_2 and ensuing log odds o
+=======
+###5. Inspecting the model fit (diagnostic II)
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
-	o=\rm{log}\frac{p(k=2|x)}{p(k=1|x)}
- 
-whereas the second plot shows the resulting posterior class probability, i.e. the probability that a given relative substitution frequency (RSF, horizontal axis) has been experimentally induced. The area under the curve corresponding to the returned RSF interval is colored, and the RSF interval indicated. By default, getExpInterval returns the RSF interval according to the Bayes classifier, i.e. RSF values having probability larger than or equal to 0.5.
+The model fit can be inspected using **getExpInterval**. 
 
 ```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
 (support <- getExpInterval( model, bayes = TRUE ) )
 ```
 
-However, the user can modify the stringency of the analysis and determine a custom RSF interval in two ways:
+The function returns two diagnostic plots. The first plot illustrates the estimated densities \\(p\\), \\(p_1\\) and \\(p_2\\), and log odds
 
-1. By setting the rightProb and leftProb parameters to a desired posterior probability cutoff, e.g.
+\\[
+	o=\rm{log}\frac{p(k=2|x)}{p(k=1|x)}.
+\\]
 
-```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
-(support <- getExpInterval( model, bayes = FALSE, leftProb = 0.9, rightProb = 0.9 ) )
-```
+The second plot shows the resulting posterior class probability, i.e. the probability that a given relative substitution frequency (RSF, horizontal axis) has been induced by PAR-CLIP. The area under the curve corresponding to the returned RSF interval is colored, and the RSF interval indicated. By default, **getExpInterval** returns the RSF interval according to the Bayes classifier, i.e. a posterior probability cutoff of 0.5. However, the user can specify a custom RSF interval:
 
-2. By inspecting the posterior class probability density and directly enter the RSF interval boundaries when calling high-confidence substitutions (see call to getHighConfSub function in the next section) 
+1. By means of the **rightProb** and **leftProb** parameters, e.g.
 
-Finally, the model can be used to produce further diagnostic plots. Particularly, besides the barplot returned by plotSubstitutions (see previous section), the total number of reads carrying a given substitution and an RSF-based partitioning of genomic positions with substitutions is returned by
+	```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
+	(support <- getExpInterval( model, bayes = FALSE, leftProb = 0.9, rightProb = 	0.9 ) )
+	```
+
+2. By inspecting the posterior class probability density and passing the RSF interval boundaries when calling high-confidence substitutions (see point 6). 
+
+Finally, the model can be used to produce further diagnostic plots. Particularly,  the total number of reads exhibitng a given substitution and an RSF-based partitioning of genomic positions with substitutions can be obtained by
 
 ```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
 plotSubstitutions( countTable, highlight = "TC", model )
 ```
 
-##Identifying protein binding sites (clusters) 
+###6. Selecting high-confidence PAR-CLIP induced transitions
 
-###Filtering high confidence signal sites
-
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 High-confidence transitions are identified by the getHighConfSub function. The RSF interval returned by getExpInterval can either directly enter a getHighConfSub function call as
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+The RSF support is used to filter all observed transitions to define a set of high-confidence, PAR-CLIP induced transitions. These are identified by **getHighConfSub**. The function returns a GRanges object with genomic position, strand, strand-specific coverage, occurence (count), and relative substitution frequency (rsf) for each high-confidence substitution. In a call to **getHighConfSub**, the RSF interval returned by **getExpInterval** can be supplied as ```support``` argument directly
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=TRUE}
 highConfSub <- getHighConfSub( countTable, 
                                support = support, 
                                substitution = "TC" )
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 head( highConfSub )                               
 ```
@@ -253,12 +314,19 @@ or, alternatively, by specifying ```supportStart``` and ```supportEnd```, which 
 
 or, alternatively, the interval can be specified by the user as
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+head( highConfSub )                               
+```
+
+or, alternatively, by specifying ```supportStart``` and ```supportEnd```, which define the range of RSF of interest.
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=FALSE}
 highConfSub <- getHighConfSub( countTable, 
                                supportStart = 0.2, 
                                supportEnd = 0.7, 
                                substitution = "TC" )
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 head( highConfSub )
 ```
@@ -272,19 +340,26 @@ Binding sites (clusters) are identified by **getClusters**. The function takes  
 The function returns a GRanges object with genomic position, strand, strand-specific coverage, occurence (count), and relative substitution frequency (rsf) for each identified high-confidence substitution.
 
 ```{r eval=TRUE}
+=======
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 head( highConfSub )
 ```
 
-###Identifying cluster boundaries and computing cluster statistics
+###7. Identifying protein binding sites (clusters) 
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 Binding sites (referred to as clusters) can be identified by the function getClusters. This function takes as input high-confidence substitution sites and the overall coverage across the genome, which can be computed using GenomicRanges as
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+Binding sites (clusters) are identified by **getClusters**. The function takes  high-confidence substitution sites and the coverage function
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=TRUE}
 coverage <- coverage( Bam )
 coverage$chrX
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 as an input. From package version 2.0, cluster boundaries are resolved using the Mini-Rank Norm (MRN) [Comoglio et al., 2015](http://www.ncbi.nlm.nih.gov/pubmed/25638391), which is up to 10x faster and more sensitive than the previously adopted  algorithm based on continuous wavelet transform of the coverage function [Sievers et al., 2012](http://www.ncbi.nlm.nih.gov/pubmed/22844102). Briefly, the MRN algorithm finds an optimal cluster boundary for each high-confidence substitution by solving an optimization problem that integrates prior knowledge on the geometry of PAR-CLIP clusters. Two options are available:
 
@@ -318,35 +393,37 @@ Note: the CWT-based method is maintained for reproducibility and can be called b
 Once the clusters are identified, the corresponding genomic regions can be merged in a strand-specific manner. Statistics for each merged cluster (a wavCluster), can be computed using **filterClusters**. 
 =======
 For versions >=2.0, cluster boundaries  are resolved by default using the Mini-Rank Norm (MRN) algorithm (Comoglio et al., 2015). Briefly, this algorithm finds an optimal cluster boundary for each high-confidence substitution by solving an optimization problem that integrates prior knowledge on the geometry of PAR-CLIP clusters. The algorithm first considers differences in the coverage function. Then, it removes background fluctuations via learning of a local background threshold or hard thresholding (default). This choice is controlled by the threshold parameter. The MRN algorithm proceeds by evaluating all ensuing possible cluster boundaries and computes ranking of boundary signals and cluster widths, which are finally used to find the optimum cluster boundary for each high-confidence substitution. Adoption of the MRN algorithm is strongly recommended as computationally faster (up to 10x) and more sensitive than the previously adopted cluster identification algorithm based on continuous wavelet transform (CWT) of the coverage function (see Sievers et al., 2012). The latter computes the continuous wavelet transform (CWT) of the coverage function on a 1 kb window centered at a high-confidence substitution site. The minimum required signal-to-noise ratio can be specified with the parameter snr (default snr=3). Since multiple high-confidence substitution sites can localize in close proximity, the step size (controlled by the step parameter) can be set to values larger than 1 (default), such that the CWT is computed only if the subsequent high-confidence substitution is located further than the specified value from the previously considered position. Starting from the peak positions the cluster boundaries are then expanded. This algorithm is still maintained for reproducibility and can be called by setting method = "cwt" in the getClusters function.
+=======
+as an input. From package version 2.0, cluster boundaries are resolved using the Mini-Rank Norm (MRN) [Comoglio et al., 2015](http://www.ncbi.nlm.nih.gov/pubmed/25638391), which is up to 10x faster and more sensitive than the previously adopted  algorithm based on continuous wavelet transform of the coverage function [Sievers et al., 2012](http://www.ncbi.nlm.nih.gov/pubmed/22844102). Briefly, the MRN algorithm finds an optimal cluster boundary for each high-confidence substitution by solving an optimization problem that integrates prior knowledge on the geometry of PAR-CLIP clusters. Two options are available:
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
-Clusters can be computed as
+1. Hard thresholding, i.e. the coverage function is denoised using a global threshold. Empirically, ```minCov=1``` worked well on all tested datasets for which ```minCov = 10```. Alternatively, 10% of the mode of the coverage distribution at high-confidence substitutions represents a possible choice.
 
-```{r eval=TRUE}
-clusters <- getClusters( highConfSub = highConfSub,
-                         coverage = coverage,
-                         sortedBam = Bam,
-                         method = "mrn",
-                         threshold = 1,
-                         cores = 1 )
-clusters
-```
+	```{r eval=TRUE}
+	clusters <- getClusters( highConfSub = highConfSub,
+                         		coverage = coverage,
+                         		sortedBam = Bam,
+                         		method = "mrn",
+                         		threshold = 1,
+                         		cores = 1 )
+	clusters
+	```
 
-Two options are available:
-
-1. Hard thresholding, based on a globally applied threshold determining the extent of noise in the coverage function. Empirically, 10% of the required minCov at high-confidence substitutions worked well in practice on all tested datasets (e.g. a value of 1 in this example where minCov = 10. Alternatively, 10% of the mode of the coverage distribution at high-confidence substitutions can represent a valuable choice.
 2. Local thresholding, based on a global estimation of background levels via a Gaussian mixture model. Omitting the threshold parameter in the call to getClusters enables local thresholding
 
-```{r eval=TRUE}
-clusters <- getClusters( highConfSub = highConfSub,
-                         coverage = coverage,
-                         sortedBam = Bam,
-                         method = "mrn",
-                         cores = 1 )
-clusters
-```
+	```{r eval=TRUE}
+	clusters <- getClusters( highConfSub = highConfSub,
+                         		coverage = coverage,
+                         		sortedBam = Bam,
+                         		method = "mrn",
+                         		cores = 1 )
+	clusters
+	```
 
-Once the clusters are identified, the reported genomic regions can be merged in a strand-specific manner and statistics for each resulting cluster, which we call a wavCluster, can be computed using the filterClusters function, which takes as input the following elements:
+####Note####
+The CWT-based method is maintained for reproducibility and can be called by specifying ```method = "cwt"``` in the function call above.
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 + The identified clusters
 + The high-confidence substitution sites
 + The genome-wide coverage
@@ -357,6 +434,11 @@ Once the clusters are identified, the reported genomic regions can be merged in 
 \
 The function can be called as follows:
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+###8. Merging clusters
+
+Once the clusters are identified, the corresponding genomic regions can be merged in a strand-specific manner. Statistics for each merged cluster (a wavCluster), can be computed using **filterClusters**. 
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=TRUE}
 require(BSgenome.Hsapiens.UCSC.hg19)
@@ -372,7 +454,10 @@ wavclusters <- filterClusters( clusters = clusters,
 wavclusters
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
+=======
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 The function takes as input the following elements:
 
 + clusters
@@ -384,6 +469,7 @@ The function takes as input the following elements:
 + minimum required width of a wavCluster
 
 and it returns a GRanges object with the following metadata:
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 
 + number of high-confidence transitions (**Ntransitions**)
 + mean coverage (**MeanCov**)
@@ -412,24 +498,27 @@ Compute metaTSS profiles based on all aligned reads in the input BAM file | **ge
 Visualize wavClusteR statistics and meta data to learn pairwise relationships between variables | **plotStatistics** | pairs plot
 =======
 The call returns a GRanges object where for each wavCluster:
+=======
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
-+ the number of high-confidence transitions (Ntransitions)
-+ the the mean coverage (MeanCov)
-+ the number of bases in the reference genome of the same type as the specified refBase (NbasesInRef)
-+ the estimated cross-linking efficiency (CrossLinkEff), i.e. the ratio between Ntransitions and NbasesInRef
-+ the genomic sequence (Sequence)
-+ the sum of the log odds (SumLogOdds), contributed by each high-confidence transition within the cluster
-+ the relative log odds (RelLogOdds), i.e. the ratio between SumLogOdds and Ntransitions
++ number of high-confidence transitions (**Ntransitions**)
++ mean coverage (**MeanCov**)
++ number of bases in the reference genome of the same type as the specified ```refBase``` (**NbasesInRef**)
++ the estimated cross-linking efficiency (**CrossLinkEff**), i.e. the ratio between **Ntransitions** and **NbasesInRef**
++ the genomic sequence (**Sequence**)
++ the sum of the log odds (**SumLogOdds**), contributed by each high-confidence transition within the cluster
++ the relative log odds (**RelLogOdds**), i.e. the ratio between **SumLogOdds** and **Ntransitions**
 
-is returned. The relative log odds can be used to rank clusters according to statistical confidence.
-
-##Output post-processing
+The relative log odds can be used to rank clusters according to statistical confidence.
 
 
-wavClusteR provides a number of functions (summarized in the table below) for post-processing of the identified wavClusters.
+###9. Post-processing of the binding sites 
+
+**wavClusteR** provides a number of functions (summarized in the table below) for post-processing of the identified binding sites.
 
 Task  | Function | Output format |
 ------------- | ------------- | ------------- |
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 Export all identified substitutions or high-confidence substitutions | exportHighConfSub | BED 
 Export clusters | exportClusters | BED 
 Export coverage function | exportCoverage | BigWig
@@ -439,8 +528,18 @@ Compute metagene profiles of wavClusters, where the density of wavClusters is re
 Compute metaTSS profiles based on all aligned reads in the input BAM file | \Rfunction{getMetaTSS} | line plot, vector
 Visualize wavClusteR statistics and meta data to learn pairwise relationships between variables | plotStatistics | pairs plot
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+Export all substitutions/high-confidence substitutions | **exportHighConfSub** | BED 
+Export clusters | **exportClusters** | BED 
+Export coverage function | **exportCoverage** | BigWig
+Visualize the size distribution of wavClusters | **plotSizeDistribution** | histogram
+Annotate clusters with respect to genomic features (e.g. CDS, introns, 3'-UTRs, 5'-UTRs) in a strand-specific manner | **annotateClusters** | dot chart, vector
+Compute metagene profiles of wavClusters, where the density of wavClusters is represented as a function of a reference genomic coordinates | **getMetaGene** | line plot, vector
+Compute metaTSS profiles based on all aligned reads in the input BAM file | **getMetaTSS** | line plot, vector
+Visualize wavClusteR statistics and meta data to learn pairwise relationships between variables | **plotStatistics** | pairs plot
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
-###Exporting substitutions, wavClusters and coverage function 
+####Exporting substitutions, wavClusters and coverage function 
 
 High-confidence substitutions can be exported with
 
@@ -451,6 +550,7 @@ exportHighConfSub( highConfSub = highConfSub,
                    description = "hcTC" )
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 where ```trackname``` and ```description``` set the corresponding attributes in the UCSC BED file. By replacing ```highConfSub``` with another set of substitutions (e.g. all identified substitutions of a given type), those can be exported likewise.
 
@@ -460,6 +560,11 @@ where trackname and description correspond to the very same attributes in the UC
 
 Similarly, wavClusters can be exported as
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+where ```trackname``` and ```description``` set the corresponding attributes in the UCSC BED file. By replacing ```highConfSub``` with another set of substitutions (e.g. all identified substitutions of a given type), those can be exported likewise.
+
+wavClusters can be exported with
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=FALSE}
 exportClusters( clusters = wavclusters, 
@@ -468,33 +573,45 @@ exportClusters( clusters = wavclusters,
                 description = "wavClusters" )
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 The coverage function can be exported with
 =======
 and the coverage function can be exported as
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+The coverage function can be exported with
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=FALSE}
 exportCoverage( coverage = coverage, filename = "coverage.bigWig" )
 ```
 
-###Annotating binding sites
+####Annotating binding sites
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 wavClusters can be annotated with respect to genomic features using **annotateClusters**. This function generates a strand-specific dot chart representing wavClusters annotation. **annotateClusters** takes as an input the wavClusters and a transcriptDB object containing transcript annotations. The latter can be generated using **makeTxDbFromUCSC** (GenomicFeatures package) 
 =======
 wavClusters can be annotated with respect to known genomic features using the annotateClusters function, which generates a strand-specific dot chart representing wavClusters annotation. The function takes as an input the wavClusters and a transcriptDB object containing all transcript annotations. The latter can either be generated a priori using the makeTxDbFromUCSC (from the GenomicFeatures package) or is automatically fetched and built by annotateClusters if not provided. If multiple calls to annotateClusters are planned, the recommended solution is to build the object once as
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+wavClusters can be annotated with respect to genomic features using **annotateClusters**. This function generates a strand-specific dot chart representing wavClusters annotation. **annotateClusters** takes as an input the wavClusters and a transcriptDB object containing transcript annotations. The latter can be generated using **makeTxDbFromUCSC** (GenomicFeatures package) 
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=FALSE}
 txDB <- makeTxDbFromUCSC(genome = "hg19", tablename = "ensGene")
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 and is automatically downloaded by **annotateClusters** if missing. 
 =======
 Then, the annotateClusters can be called as follows
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+and is automatically downloaded by **annotateClusters** if missing. 
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=FALSE}
 annotateClusters( clusters = wavclusters, 
@@ -503,6 +620,7 @@ annotateClusters( clusters = wavclusters,
               verbose = TRUE)
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 Four dot charts are returned by the function showing the percentage of clusters mapping to different transcript features localized on the same (sense) or on the opposite (antisense) strand, the relative sequence length of different compartments relative to the total transcriptome length and the normalized enrichment of clusters across functional compartments.
 
@@ -518,6 +636,17 @@ Four dot charts are returned by the function. The first plot (top) represents th
 
 A graphical representation of the density of wavClusters as a function of a binning of genomic coordinates across all annotated genes can be obtained using the getMetaGene function as follows:
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+Four dot charts are returned by the function showing the percentage of clusters mapping to different transcript features localized on the same (sense) or on the opposite (antisense) strand, the relative sequence length of different compartments relative to the total transcriptome length and the normalized enrichment of clusters across functional compartments.
+
+####Note####
+
+Multiple hits, i.e. wavClusters that overlap with more than one genomic feature, are reported as "multiple", whereas wavClusters that map outside of the considered features are labeled as "other". The latter are then annotated with respect to features on the antisense strand. 
+
+###Computing cluster metagene profiles
+
+A graphical representation of the density of wavClusters as a function of a binning of genomic coordinates across all annotated genes can be obtained using the **getMetaGene** function.
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=FALSE}
 getMetaGene( clusters = wavclusters, 
@@ -531,6 +660,7 @@ getMetaGene( clusters = wavclusters,
              verbose = TRUE ) 
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 In this example, genes were divided in 40 bins (```nBins```) and an ```upstream```/```downstream``` region spanning 1kb was considered. This region was subdivided in 10 bins (```nBinsUD```). No restriction on gene length was applied (```minLength```). **getMetaGene** returns a numeric vector of length ```nBins``` + 2*```nBinsUD``` with normalized counts, which can be used, for instance, to compare the distribution of wavClusters across several PAR-CLIP samples.
 
@@ -539,6 +669,11 @@ In addition to metagene profiles, meta transcription start site (TSS) profiles b
 In the function call above, genes were divided in 40 bins (nBins) and an upstream/downstream region spanning 1kb was considered (width controlled by upstream and downstream parameters). This, in turn, was subdivided in 10 bins (nBinsUD). No restriction on gene length was applied (minLength). The numeric vector of length nBins + 2*nBinsUD with normalized counts is returned by the function and therefore can be used, for example, to compare the distribution of wavClusters across several PAR-CLIP samples.
 In addition to metagene profiles, metaTSS profiles based on all aligned reads in the input BAM file can be generated using the getMetaTSS function. A default function call is as follows:
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+In this example, genes were divided in 40 bins (```nBins```) and an ```upstream```/```downstream``` region spanning 1kb was considered. This region was subdivided in 10 bins (```nBinsUD```). No restriction on gene length was applied (```minLength```). **getMetaGene** returns a numeric vector of length ```nBins``` + 2*```nBinsUD``` with normalized counts, which can be used, for instance, to compare the distribution of wavClusters across several PAR-CLIP samples.
+
+In addition to metagene profiles, meta transcription start site (TSS) profiles based on all mapped reads can be generated using **getMetaTSS**. 
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r eval=FALSE}
 getMetaTSS( sortedBam = Bam, 
@@ -551,6 +686,7 @@ getMetaTSS( sortedBam = Bam,
             verbose = TRUE ) 
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 Here, the ```upstream``` and ```downstream``` parameters control the width of the window to be considered, and ```nBins``` controls the resolution of the profile. If ```unique=TRUE```, then overlapping windows are discarded. **getMetaTSS** returns a numeric vector of length ```nBins``` with normalized read counts.
 
@@ -559,26 +695,38 @@ Here, the ```upstream``` and ```downstream``` parameters control the width of th
 The size distribution of wavClusters can be visualized by
 =======
 where the upstream and downstream parameters control the width of the window centered on the transcription start site (TSS) to be considered, nBins determines the resolution of the profile. If unique is enabled, then overlapping TSSs are discarded. The numeric vector of length nBins with normalized read counts is returned by the function and therefore can be used, for example, to compare several PAR-CLIP samples.
+=======
+Here, the ```upstream``` and ```downstream``` parameters control the width of the window to be considered, and ```nBins``` controls the resolution of the profile. If ```unique=TRUE```, then overlapping windows are discarded. **getMetaTSS** returns a numeric vector of length ```nBins``` with normalized read counts.
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
-###Visualizing the size distribution of wavClusters
+####Computing the size distribution of wavClusters
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 The size distribution of wavClusters is visualized as a histogram and returned by the following function call
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+The size distribution of wavClusters can be visualized by
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
 plotSizeDistribution( clusters = wavclusters, col = "skyblue2" )
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 where additional parameters of the hist function can be passed in the function call. If ```showCov=TRUE```, a scatter plot of average cluster coverage vs. cluster length is returned.
 =======
 where additional parameters of the hist function can be passed in the function call. Finally, if showCov=TRUE, a scatter plot of average cluster coverage vs. cluster length is returned
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+where additional parameters of the hist function can be passed in the function call. If ```showCov=TRUE```, a scatter plot of average cluster coverage vs. cluster length is returned.
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r fig.width=5, fig.height=5, fig.align='center', eval=TRUE}
 plotSizeDistribution( clusters = wavclusters, showCov = TRUE, col = "skyblue2" )
 ```
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 ###Visualizing wavCluster statistics and meta data
 
@@ -588,6 +736,11 @@ Cluster statistics can be plotted as pairs plot using
 
 The size distribution of wavClusters is visualized as a histogram and returned by the following function call
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+####Visualizing wavCluster statistics and meta data
+
+Cluster statistics can be plotted as pairs plot using
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 ```{r fig.width=5, fig.height=5, fig.align='center', eval=FALSE}
 plotStatistics( clusters = wavclusters, 
@@ -609,9 +762,12 @@ sessionInfo()
 =======
 ## References
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 Sievers, C., Schlumpf, T., Sawarkar, R., Comoglio, F. & Paro, R. (2012) Mixture models and wavelet transforms reveal high confidence RNA-protein interaction sites in MOV10 PAR-CLIP data. Nucleic Acids Res 40(2), e160
 >>>>>>> Added Rmd vignette, removed pdf.
 
+=======
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 Comoglio, F., Sievers, C. & Paro, R. (2015) Sensitive and highly resolved inidentification of RNA-protein interaction sites in PAR-CLIP data. BMC Bioinformatics, 16, 32
 
 Langmead,B., Trapnell,C., Pop,M. \& Salzberg,S.L. (2009)
@@ -620,6 +776,7 @@ Ultrafast and memory-efficient alignment of short DNA sequences to the human gen
 Kishore, S. et al. (2011)
 A quantitative analysis of CLIP methods for identifying binding sites of RNA-binding proteins. Nature Methods 8(7), 559-564
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 <<<<<<< 63007603c9afb3722b67852cf02bb0c8143cfbe7
 Sievers, C., Schlumpf, T., Sawarkar, R., Comoglio, F. & Paro, R. (2012) Mixture models and wavelet transforms reveal high confidence RNA-protein interaction sites in MOV10 PAR-CLIP data. Nucleic Acids Res 40(2), e160
 
@@ -629,10 +786,15 @@ Morgan, M. & Pages, H. Rsamtools: Binary alignment (BAM), variant call (BCF), or
 file import, [http://bioconductor.org/packages/release/bioc/html/Rsamtools.
 html](http://bioconductor.org/packages/release/bioc/html/Rsamtools.
 html)
+=======
+Sievers, C., Schlumpf, T., Sawarkar, R., Comoglio, F. & Paro, R. (2012) Mixture models and wavelet transforms reveal high confidence RNA-protein interaction sites in MOV10 PAR-CLIP data. Nucleic Acids Res 40(2), e160
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
-Pages, H., BSgenome: Infrastructure for Biostrings-based genome data packages
 
+<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 Kent WJ, Sugnet CW, Furey TS, Roskin KM, Pringle TH, Zahler AM, Haussler D. (2002) The human genome browser at UCSC. Genome Res. 12(6), 996-1006.
 >>>>>>> Added Rmd vignette, removed pdf.
+=======
+>>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
 
 
