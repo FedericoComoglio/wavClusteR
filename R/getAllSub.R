@@ -14,7 +14,7 @@ getComplSubst <- function( processedMD ) {
 	minusStrand <- which( processedMD[, 'strand'] == '-' )
 	mds <- processedMD[ minusStrand, 'substitutions' ] 
 	mds <- DNAStringSet( mds )
-	cpl <-  as.character( complement( mds ) )
+	cpl <-  as.character( Biostrings::complement( mds ) )
 	processedMD[ minusStrand, 'substitutions' ] <- cpl
 	return( processedMD )
 }
