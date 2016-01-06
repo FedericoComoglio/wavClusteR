@@ -1,0 +1,5 @@
+wavClusteR 2.5.0
+--------------
+
+*  fixed bug in plotSubstitutions. The transition type of interest was not correctly highlighted in some instances. Thanks to Charlotte Sonenson for pointing this out. 
+*  Vignette migrated to Rmarkdown.
