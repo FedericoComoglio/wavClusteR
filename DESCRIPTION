@@ -5,15 +5,7 @@ Version: 2.5.0
 Date: 2015-13-02
 Depends: R (>= 3.0.0), GenomicRanges, Rsamtools
 Imports: Biostrings, foreach, GenomicFeatures, ggplot2, Hmisc, IRanges, mclust, rtracklayer, seqinr, stringr, wmtsa
-<<<<<<< c1104b4a92a14a3acbc2459198061ae257393c11
-<<<<<<< ddb2e1e1ff0740857364074a6fe912a1c62e75b8
 Suggests: BiocStyle, knitr, rmarkdown, BSgenome.Hsapiens.UCSC.hg19
-=======
-Suggests: knitr, BSgenome.Hsapiens.UCSC.hg19
->>>>>>> Adding VignetteBuilder, completed new version of pkg vignette.
-=======
-Suggests: BiocStyle, knitr, rmarkdown, BSgenome.Hsapiens.UCSC.hg19
->>>>>>> Vignette in BioC style
 Enhances: doMC
 VignetteBuilder: knitr
 Author: Federico Comoglio and Cem Sievers
