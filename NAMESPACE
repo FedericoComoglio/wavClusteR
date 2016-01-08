@@ -52,6 +52,7 @@ importFrom(Hmisc, dotchart2)
 importFrom(seqinr, write.fasta)
 
 importFrom(Biostrings, getSeq)
+importFrom(Biostrings, complement)
 
 importFrom(Rsamtools, ScanBamParam)
 importFrom(Rsamtools, scanBam)
