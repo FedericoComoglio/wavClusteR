@@ -1,8 +1,6 @@
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
 
 computePosterior <- function( tableCovCount ) {
-# Error handling
-#   ...
 
 	matrixCovCount <- as.matrix( tableCovCount )
 
@@ -63,8 +61,7 @@ estimateP <- function( countTableSplit ) {
 #' 
 #' Estimates the two-component mixture model consisting of the mixing
 #' coefficients and the density functions.
-#' 
-#' 
+#'
 #' @usage fitMixtureModel(countTable, substitution = "TC")
 #' @param countTable A GRanges object, corresponding to a count table as
 #' returned by the \link{getAllSub} function
