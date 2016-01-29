@@ -80,7 +80,7 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 
      ## Match a nucleotide preceed by a digit (returns list)
      mdsSplit <- regmatches( mds, gregexpr( '\\d*|[ACGTN]{1}', mds) )
-     len <- elementLengths( mdsSplit )
+     len <- elementNROWS( mdsSplit )
      grp <- rep( seq_along( len ), len )
 
      ## number and geometry of substitutions
@@ -95,8 +95,8 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
      mismatchedPos[!isChar] <- as.integer(u[!isChar])
      mismatchedPos <- cumsum(splitAsList(mismatchedPos, grp))[isCharGrp]
 
-     chunk_n <- unname(elementLengths(chunk))
-     mismatched_n <- unname(elementLengths(mismatchedPos))
+     chunk_n <- unname(elementNROWS(chunk))
+     mismatched_n <- unname(elementNROWS(mismatchedPos))
 
      ## nucleotide substitutions
      at0 <- mismatchedPos[rep(seq_along(chunk), chunk_n)]
@@ -145,7 +145,7 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 #
 #     ## Match a nucleotide preceed by a digit (returns list)
 #     mdsSplit <- regmatches( mds, gregexpr( '\\d*|[ACGTN]{1}', mds) )
-#     len <- elementLengths( mdsSplit )
+#     len <- elementNROWS( mdsSplit )
 #     grp <- rep( seq_along( len ), len )
 #
 #     ## number and geometry of substitutions
@@ -160,8 +160,8 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 #     mismatchedPos[!isChar] <- as.integer(u[!isChar])
 #     mismatchedPos <- cumsum(splitAsList(mismatchedPos, grp))[isCharGrp]
 #
-#     chunk_n <- unname(elementLengths(chunk))
-#     mismatched_n <- unname(elementLengths(mismatchedPos))
+#     chunk_n <- unname(elementNROWS(chunk))
+#     mismatched_n <- unname(elementNROWS(mismatchedPos))
 #
 #     ## nucleotide substitutions
 #     at0 <- mismatchedPos[rep(seq_along(chunk), chunk_n)]
