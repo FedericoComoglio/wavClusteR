@@ -1,13 +1,9 @@
-import(IRanges) 
+import(methods)
+import(BiocGenerics)
+import(S4Vectors)
+import(IRanges)
+import(GenomicRanges)
 
-importMethodsFrom(GenomicRanges, split)
-importMethodsFrom(GenomicRanges, as.data.frame)
-importMethodsFrom(GenomicRanges, sort)
-
-importMethodsFrom(IRanges, diff)
-importMethodsFrom(IRanges, as.matrix)
-importMethodsFrom(IRanges, as.vector)
-importMethodsFrom(IRanges, unlist)
 
 importMethodsFrom(GenomicFeatures, genes)
 
