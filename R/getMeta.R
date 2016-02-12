@@ -85,7 +85,7 @@ getMetaTSS <- function( sortedBam, txDB = NULL, upstream = 1e3, downstream = 1e3
 	if( unique ) {
 		if(verbose)
 			message( 'Retaining non-overlapping promoters...' )
-		olaps <- findOverlaps( tss, ignoreSelf = TRUE )
+		olaps <- findOverlaps( tss, drop.self = TRUE )
 		overlapping <- unique( c( queryHits( olaps ), subjectHits( olaps ) ) )
 		tss <- tss[ -overlapping ]
 	}
