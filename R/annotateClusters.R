@@ -218,7 +218,7 @@ annotateClusters <- function( clusters, txDB = NULL, genome = 'hg19', tablename 
 		p <- ggplot( data = summaryDf,
 			aes( x = Percentage, y = Compartment ) ) + 
  			geom_point( colour = 'royalblue', size = 2 ) + 
- 			facet_grid( group ~ ., scales = 'free', labeller = changeLab ) +
+ 			facet_grid( group ~ ., scales = 'free' ) +
 			theme_bw()
 			labs( title = 'Cluster annotation' ) +
 			theme( plot.title = element_text( size = rel( 1 ) ) )

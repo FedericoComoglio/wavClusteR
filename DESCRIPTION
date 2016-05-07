@@ -3,7 +3,7 @@ Type: Package
 Title: Sensitive and highly resolved identification of RNA-protein interaction
     sites in PAR-CLIP data
 Version: 2.7.0
-Date: 2016-02-11
+Date: 2015-05-07
 Depends:
     R (>= 3.2),
     GenomicRanges (>= 1.23.16),
