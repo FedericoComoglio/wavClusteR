@@ -17,7 +17,7 @@ processMD <- function( SubstMtx, cores ) {
 		registerDoMC( cores = cores )
      	} else {
      	}
-	
+
 	n <- length( SubstMtx )
 	set <- c( seq( 1, n, 1e3 ), n + 1 ) #construct chunks of size 1e3
 	m <- length( set )
@@ -38,7 +38,7 @@ processMD <- function( SubstMtx, cores ) {
 # process a single chunk of MD tags (size 1e3)
 #
 # Args:
-#   chunk: a subset of SubstMtx as produced and passed by the processMD function 
+#   chunk: a subset of SubstMtx as produced and passed by the processMD function
 #
 # Returns:
 #   a matrix, containing identified substitutions according to MD tag for the processed chunk of data
@@ -48,7 +48,7 @@ processMD <- function( SubstMtx, cores ) {
 #	n <- length( chunk )
 #	mds <- names( chunk ) #contains all MD tags of the chunk being processed
 #
-#	chunkSubstitutions <- c() 
+#	chunkSubstitutions <- c()
 #
 #	for( i in seq_len( n ) ) {
 #		md <- mds[ i ]
@@ -63,7 +63,7 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 # process a single chunk of MD tags (size 1e3)
 #
 # Args:
-#   chunk: a subset of SubstMtx as produced and passed by the processMD function 
+#   chunk: a subset of SubstMtx as produced and passed by the processMD function
 #
 # Returns:
 #   a data frame, containing identified substitutions according to MD tag for the processed chunk of data
@@ -72,14 +72,15 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 #   ...
 
      mds <- names( chunk )
-	 strands <- unname( strand( chunk ) )	
+	 strands <- unname( strand( chunk ) )
 	 strands <- lapply( strands, as.character )
 	 snames <- unname( seqnames( chunk ) )
 	 snames <- lapply( snames, as.character )
-	 
+
 
      ## Match a nucleotide preceed by a digit (returns list)
      mdsSplit <- regmatches( mds, gregexpr( '\\d*|[ACGTN]{1}', mds) )
+#     len <- elementLengths( mdsSplit ) #defunct
      len <- elementNROWS( mdsSplit )
      grp <- rep( seq_along( len ), len )
 
@@ -95,7 +96,9 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
      mismatchedPos[!isChar] <- as.integer(u[!isChar])
      mismatchedPos <- cumsum(splitAsList(mismatchedPos, grp))[isCharGrp]
 
+#     chunk_n <- unname(elementLengths(chunk)) #defunct
      chunk_n <- unname(elementNROWS(chunk))
+#     mismatched_n <- unname(elementLengths(mismatchedPos)) #defunct
      mismatched_n <- unname(elementNROWS(mismatchedPos))
 
      ## nucleotide substitutions
@@ -113,9 +116,9 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
      posMismatchesGenome <- unlist(start(chunk)) + at0 - 1
 
 	##5-Get strand information right
-	strands <- unlist( lapply( seq_len( length( mismatched_n ) ), 
+	strands <- unlist( lapply( seq_len( length( mismatched_n ) ),
 		function( i ) rep( strands[[ i ]], each = mismatched_n[ i ] ) ) )
-	snames <- unlist( lapply( seq_len( length( mismatched_n ) ), 
+	snames <- unlist( lapply( seq_len( length( mismatched_n ) ),
 			function( i ) rep( snames[[ i ]], each = mismatched_n[ i ] ) ) )
      ##6-Prepare output
      DataFrame(
@@ -133,7 +136,7 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 ## process a single chunk of MD tags (size 1e3)
 ##
 ## Args:
-##   chunk: a subset of SubstMtx as produced and passed by the processMD function 
+##   chunk: a subset of SubstMtx as produced and passed by the processMD function
 ##
 ## Returns:
 ##   a data frame, containing identified substitutions according to MD tag for the processed chunk of data
@@ -145,7 +148,7 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 #
 #     ## Match a nucleotide preceed by a digit (returns list)
 #     mdsSplit <- regmatches( mds, gregexpr( '\\d*|[ACGTN]{1}', mds) )
-#     len <- elementNROWS( mdsSplit )
+#     len <- elementLengths( mdsSplit )
 #     grp <- rep( seq_along( len ), len )
 #
 #     ## number and geometry of substitutions
@@ -160,8 +163,8 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 #     mismatchedPos[!isChar] <- as.integer(u[!isChar])
 #     mismatchedPos <- cumsum(splitAsList(mismatchedPos, grp))[isCharGrp]
 #
-#     chunk_n <- unname(elementNROWS(chunk))
-#     mismatched_n <- unname(elementNROWS(mismatchedPos))
+#     chunk_n <- unname(elementLengths(chunk))
+#     mismatched_n <- unname(elementLengths(mismatchedPos))
 #
 #     ## nucleotide substitutions
 #     at0 <- mismatchedPos[rep(seq_along(chunk), chunk_n)]
@@ -188,8 +191,8 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 #  }
 
 
-#extractSingleMD <- function( MD, SubstMtxInstance ) {  
-# Extract information from MD tag of a single instance of the SubstMtx matrix. 
+#extractSingleMD <- function( MD, SubstMtxInstance ) {
+# Extract information from MD tag of a single instance of the SubstMtx matrix.
 #
 # Args:
 #   MD: character, the MD tag being considered
@@ -201,7 +204,7 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 # Error handling
 #   ...
 
-	#1-Extract vectors 
+	#1-Extract vectors
 #	chr <- SubstMtxInstance[, 1]
 #	start <- as.numeric( SubstMtxInstance[, 2] )
 #	strand <- SubstMtxInstance[, 3]
@@ -219,7 +222,7 @@ processChunk <- function( chunk ) { #contributed by Martin Morgan
 	#3-Extract characters from sequence
 #	readSplit <- strsplit( qseq, '' )
 #	substitutions <- vapply( readSplit, FUN.VALUE = rep( '', n ), function(x) x[ posMismatches ] )
-#	substitutions <- paste( mismatchedBases, substitutions, sep = '' ) 
+#	substitutions <- paste( mismatchedBases, substitutions, sep = '' )
 
 	#4-Identify genomic positions of mismatches
 #	posMismatchesGenome <- as.vector( sapply( start, function(x) x + posMismatches - 1 ) )

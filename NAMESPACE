@@ -53,7 +53,7 @@ importFrom(Biostrings, complement)
 importFrom(Rsamtools, ScanBamParam)
 importFrom(Rsamtools, scanBam)
 
-export( 
+export(
 	readSortedBam,
 	getAllSub,
 	fitMixtureModel,
@@ -73,6 +73,3 @@ export(
 	exportCoverage,
 	exportSequences
 )
-
-
-

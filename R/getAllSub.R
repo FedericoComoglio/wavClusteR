@@ -1,6 +1,6 @@
 #2013 - Federico Comoglio & Cem Sievers, D-BSSE, ETH Zurich
 
-getComplSubst <- function( processedMD ) { 
+getComplSubst <- function( processedMD ) {
 # Return complementary bases for substitutions identified on the minus strand
 #
 # Args:
@@ -12,7 +12,7 @@ getComplSubst <- function( processedMD ) {
 # Error handling
 #   ...
 	minusStrand <- which( processedMD[, 'strand'] == '-' )
-	mds <- processedMD[ minusStrand, 'substitutions' ] 
+	mds <- processedMD[ minusStrand, 'substitutions' ]
 	mds <- DNAStringSet( mds )
 	cpl <-  as.character( Biostrings::complement( mds ) )
 	processedMD[ minusStrand, 'substitutions' ] <- cpl
@@ -32,7 +32,7 @@ getCoverageAtSubst <- function( allSubstSplit, cov ) {
 #
 # Error handling
 #   ...
-	
+
 	#1-sort substitutions
 	allSubstSplit <- sort( allSubstSplit )
 
@@ -58,7 +58,7 @@ getCoverageAtSubst <- function( allSubstSplit, cov ) {
 
 
 getCountTable <- function( substWithCov, minCov ) {
-# summarize substitutions to produce a count table 
+# summarize substitutions to produce a count table
 #
 # Args:
 #   substWithCov: GRanges object containing all identified substitutions and their local coverage as produced by the getFilteredSub function
@@ -72,12 +72,12 @@ getCountTable <- function( substWithCov, minCov ) {
 
 	#1-retain substitutions with coverage >= minCov
 	cov <- elementMetadata( substWithCov )[, 'coverage']
-	filtered <- substWithCov[ cov >= minCov ] 
+	filtered <- substWithCov[ cov >= minCov ]
 
 	#2-remove substitutions involving N's
 	remove <- elementMetadata( filtered )[, 'substitutions'] %in% c( 'AN', 'CN', 'GN', 'TN' )
 	filtered <- filtered[ !remove ]
-	
+
 	#3-convert to dataframe
 	filteredDf <- as.data.frame( filtered )
 
@@ -86,21 +86,21 @@ getCountTable <- function( substWithCov, minCov ) {
 	filteredDf <- filteredDf[ !remove, ]
 
 	#5-initialize count table (GRanges)
-	countTable <- GRanges( seqnames      = filteredDf[, 'seqnames'], 
+	countTable <- GRanges( seqnames      = filteredDf[, 'seqnames'],
 			       ranges        = IRanges( filteredDf[, 'start'], filteredDf[, 'end'] ),
  	       		       strand        = filteredDf[, 'strand'],
- 		               substitutions = filteredDf[, 'substitutions'], 
-			       coverage      = filteredDf[, 'coverage'] ) 
+ 		               substitutions = filteredDf[, 'substitutions'],
+			       coverage      = filteredDf[, 'coverage'] )
 	#6-find overlaps between filtered substitutions and count table template (unique ones)
 	olaps <- findOverlaps( filtered, countTable )
 	subst <- elementMetadata( filtered )[ queryHits( olaps ), 'substitutions' ]
-	sh <- subjectHits( olaps )	
+	sh <- subjectHits( olaps )
 	splits <- split( subst, sh )
-	uniqueSub <- elementMetadata( countTable )[ unique( sh ), 'substitutions' ] 
+	uniqueSub <- elementMetadata( countTable )[ unique( sh ), 'substitutions' ]
 	n <- length( uniqueSub )
 	counts <- sapply( seq_len( n ), function(x) length( which( splits[[ x ]] == uniqueSub[ x ] ) ) )
-	elementMetadata( countTable )[, 'count'] <- counts	
-	
+	elementMetadata( countTable )[, 'count'] <- counts
+
 	return( countTable )
 }
 
@@ -109,17 +109,17 @@ getCountTable <- function( substWithCov, minCov ) {
 
 #' Identify all substitutions observed across genomic positions exhibiting a
 #' specified minimum coverage
-#' 
+#'
 #' All substitutions observed across genomic positions exhibiting user-defined
 #' minimum coverage are extracted and a count table is returned. This function
 #' supports parallel computing.
-#' 
+#'
 #' The choice of the minimum coverage influences the variance of the relative
 #' substitution frequency estimates, which in turn affect the mixture model
 #' fit. A conservative value depending on the library size is recommended for a
 #' first analysis. Values smaller than 10 have not been tested and are
 #' therefore not recommended.
-#' 
+#'
 #' @usage getAllSub(sortedBam, minCov = 20, cores = 1)
 #' @param sortedBam GRanges object containing aligned reads as returned by
 #' \link{readSortedBam}
@@ -138,58 +138,58 @@ getCountTable <- function( substWithCov, minCov ) {
 #' @seealso \code{\link{readSortedBam}}
 #' @keywords core
 #' @examples
-#' 
+#'
 #' filename <- system.file( "extdata", "example.bam", package = "wavClusteR" )
 #' example <- readSortedBam(filename = filename)
 #' countTable <- getAllSub( example, minCov = 10, cores = 1 )
 #' countTable
-#' 
+#'
 #' @export getAllSub
 getAllSub <- function( sortedBam, minCov = 20, cores = 1 ) {
 # Error handling
 #   if qseq (read sequences) and MD (MD tag) are present as metadata, raise an error
-	emd <- elementMetadata( sortedBam )	#dataframe object	
-	if( !all( c('qseq', 'MD') %in% colnames( emd ) ) )
+	emd <- elementMetadata( sortedBam )	#dataframe object
+	if( !all( c('qseq', 'tag.MD') %in% colnames( emd ) ) )
 		stop( 'read sequences or MD tags missing. Please read in the BAM file using the readSortedBam function' )
 
 #   if minimum coverage < 10, inform the user that this might lead to unstable MLE of the RSF
 	if( minCov < 10 )
 		message( 'Note: chosing a minimum coverage < 10 might lead to unstable estimate of the relative substitution frequencies values.' )
-	
+
 	#reshape function for later use
-#	rsh <- function( x ) 
+#	rsh <- function( x )
 #		  	matrix( x, ncol = 4 )
-	
+
 	#1-split sortedBam by strand to compute strand-specific coverage
 	sortedBamByStrand <- split( sortedBam, strand( sortedBam ) )[1 : 2]
 	covPlus	 <- coverage( sortedBamByStrand[ 1 ] )
 	covMinus <- coverage( sortedBamByStrand[ 2 ] )
 
 	#2-retain only those positions exhibiting a substitution and prepare input to extract all info from MD tag
-	mds <- emd$MD
+	mds <- emd$tag.MD
 	flag <- grepl( pattern = '[A-Za-z]', mds ) #grep any line with at least one letter (numbers only indicate perfect matches). Returns logical
 
 	hasSubst <- sortedBam[ flag ] #select only those positions with a substitution
-	substMtx <- split( hasSubst, hasSubst$MD )	#suggested by MM, generates a GRangesList
+	substMtx <- split( hasSubst, hasSubst$tag.MD )	#suggested by MM, generates a GRangesList
 
 
 #	substMtx <- as.matrix( as.data.frame( hasSubst )[, c( 'seqnames', 'start', 'strand', 'qseq', 'MD' )] ) #transforming to matrix makes split >> faster
 #	substMtx <- split( substMtx[, c( 'seqnames', 'start', 'strand', 'qseq' )], substMtx[, 'MD'] ) #use of $ not allowed here (atomic vectors)
 #	substMtx <- lapply( substMtx, rsh )
-	
-	#3-extract information from MD field 
+
+	#3-extract information from MD field
 	processedMD <- processMD( substMtx, cores = cores ) #parallelized
 	processedMD <- getComplSubst( processedMD )
 	n <- nrow( processedMD )
 
 	#4-create a GRanges object containing all identified substitutions
 	pos <- as.numeric( processedMD[, 'posMismatchesGenome'] )
-	allSubst <- GRanges( seqnames      = processedMD[, 'seqnames'], 
-			     ranges        = IRanges( pos , pos ), 
-	     		     strand        = processedMD[, 'strand'], 
-			     substitutions = processedMD[, 'substitutions'], 
+	allSubst <- GRanges( seqnames      = processedMD[, 'seqnames'],
+			     ranges        = IRanges( pos , pos ),
+	     		     strand        = processedMD[, 'strand'],
+			     substitutions = processedMD[, 'substitutions'],
                              coverage      = rep( Inf, n ) )
-	
+
 	#5-split the object to extract substitutions on +/- strand, to be processed separately
 	allSubstSplit <- split( allSubst, strand( allSubst ) )[1 : 2]
 	message('   considering the + strand' )
@@ -200,7 +200,7 @@ getAllSub <- function( sortedBam, minCov = 20, cores = 1 ) {
 	#6-combine results in a single GRanges object
 	substWithCov <- c( substPlus, substMinus )
 	substWithCov <- unlist( substWithCov, use.names = FALSE )
-				
+
 	#7-summarize results to produce a count table
 	countTable <- getCountTable( substWithCov, minCov )
 
