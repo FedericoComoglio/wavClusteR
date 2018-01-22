@@ -10,7 +10,7 @@ readSortedBam(filename, which)
 \item{filename}{Name of the sorted BAM file, including full path to file if
 it is located outside the current working directory.}
 
-\item{which}{a GRanges, RangesList or RangedData specifying the regions on
+\item{which}{a GRanges or IntegerRangesList specifying the regions on
 the reference sequence for which matches are desired. See the documentation
 of the \code{Rsamtools} package for details.}
 }

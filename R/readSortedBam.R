@@ -11,7 +11,7 @@
 #' @usage readSortedBam(filename, which)
 #' @param filename Name of the sorted BAM file, including full path to file if
 #' it is located outside the current working directory.
-#' @param which a GRanges, RangesList or RangedData specifying the regions on
+#' @param which a GRanges or IntegerRangesList specifying the regions on
 #' the reference sequence for which matches are desired. See the documentation
 #' of the \code{Rsamtools} package for details.
 #' @return a GRanges object containing aligned reads, including read sequence
@@ -36,7 +36,7 @@ readSortedBam <- function( filename, which ) {
 #
 # Args:
 #   filename: character, the filename and/or path to it
-#   which: a GRanges, RangesList or RangedData specifying the regions on the reference sequence for which matches are desired.
+#   which: a GRanges or IntegerRangesList specifying the regions on the reference sequence for which matches are desired.
 #
 # Returns:
 #   a GRanges object containing all raw data for wavClusteR2 analysis
