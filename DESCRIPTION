@@ -2,7 +2,7 @@ Package: wavClusteR
 Type: Package
 Title: Sensitive and highly resolved identification of RNA-protein interaction
     sites in PAR-CLIP data
-Version: 2.15.0
+Version: 2.16.0
 Date: 2015-05-07
 Depends:
     R (>= 3.2),
