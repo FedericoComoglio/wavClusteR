@@ -2,7 +2,7 @@ Package: wavClusteR
 Type: Package
 Title: Sensitive and highly resolved identification of RNA-protein interaction
     sites in PAR-CLIP data
-Version: 2.17.0
+Version: 2.17.1
 Date: 2015-05-07
 Depends:
     R (>= 3.2),
@@ -45,6 +45,6 @@ Description: The package provides an integrated pipeline for the analysis
     the analysis of other NGS data obtained from experimental procedures that induce
     nucleotide substitutions (e.g. BisSeq).
 License: GPL-2
-biocViews: Sequencing, Technology, RIPSeq, RNASeq, Bayesian
+biocViews: ImmunoOncology, Sequencing, Technology, RIPSeq, RNASeq, Bayesian
 LazyLoad: yes
 RoxygenNote: 5.0.1
