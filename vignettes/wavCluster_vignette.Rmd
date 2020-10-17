@@ -171,7 +171,6 @@ as an input. From package version 2.0, cluster boundaries are resolved using the
 	clusters <- getClusters( highConfSub = highConfSub,
                          		coverage = coverage,
                          		sortedBam = Bam,
-                         		method = "mrn",
                          		threshold = 1,
                          		cores = 1 )
 	clusters
@@ -183,12 +182,9 @@ as an input. From package version 2.0, cluster boundaries are resolved using the
 	clusters <- getClusters( highConfSub = highConfSub,
                          		coverage = coverage,
                          		sortedBam = Bam,
-                         		method = "mrn",
                          		cores = 1 )
 	clusters
 	```
-
-Note: the CWT-based method is maintained for reproducibility and can be called by specifying ```method = "cwt"``` in the function call above.
 
 ##Merging clusters
 

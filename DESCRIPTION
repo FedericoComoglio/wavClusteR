@@ -21,8 +21,7 @@ Imports:
     mclust,
     rtracklayer (>= 1.39.7),
     seqinr,
-    stringr,
-    wmtsa
+    stringr
 Suggests:
     BiocStyle,
     knitr,
@@ -47,4 +46,4 @@ Description: The package provides an integrated pipeline for the analysis
 License: GPL-2
 biocViews: ImmunoOncology, Sequencing, Technology, RIPSeq, RNASeq, Bayesian
 LazyLoad: yes
-RoxygenNote: 5.0.1
+RoxygenNote: 7.0.2

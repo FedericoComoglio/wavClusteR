@@ -30,11 +30,10 @@ Export clusters as BED track, compatible with the UCSC genome browser
 Clusters are color coded according to their strand information (red
 for the plus strand, blue for the minus strand).
 }
-\author{
-Federico Comoglio
-}
 \seealso{
 \code{\link{filterClusters}}
 }
+\author{
+Federico Comoglio
+}
 \keyword{postprocessing}
-

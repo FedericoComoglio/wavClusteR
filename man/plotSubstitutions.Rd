@@ -38,11 +38,10 @@ countTable <- getAllSub( example, minCov = 10, cores = 1 )
 plotSubstitutions(countTable = countTable, highlight = "TC")
 
 }
-\author{
-Federico Comoglio and Cem Sievers
-}
 \seealso{
 \code{\link{getAllSub}}
 }
+\author{
+Federico Comoglio and Cem Sievers
+}
 \keyword{graphics}
-

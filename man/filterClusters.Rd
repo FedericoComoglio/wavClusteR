@@ -96,9 +96,6 @@ fclusters <- filterClusters( clusters = clusters,
 fclusters
 
 }
-\author{
-Federico Comoglio and Cem Sievers
-}
 \references{
 Herve Pages, BSgenome: Infrastructure for Biostrings-based
 genome data packages
@@ -115,5 +112,7 @@ of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 \code{\link{getClusters}}, \code{\link{getHighConfSub}},
 \code{\link{fitMixtureModel}}
 }
+\author{
+Federico Comoglio and Cem Sievers
+}
 \keyword{core}
-

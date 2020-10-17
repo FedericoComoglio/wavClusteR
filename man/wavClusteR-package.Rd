@@ -2,8 +2,8 @@
 % Please edit documentation in R/wavClusteR-package.R
 \docType{package}
 \name{wavClusteR-package}
-\alias{wavClusteR}
 \alias{wavClusteR-package}
+\alias{wavClusteR}
 \title{A comprehensive pipeline for the analysis of PAR-CLIP data. PAR-CLIP-induced 
 transitions are first discriminated from sequencing errors, SNPs and additional non-
 experimental sources by a non-parametric mixture model. The protein binding sites 
@@ -19,6 +19,15 @@ substitutions (e.g. BisSeq).}
 \tabular{ll}{ Package: \tab wavClusteR\cr Type: \tab Package\cr Version:
 \tab 2.5.0\cr Date: \tab 2016-01-09\cr License: \tab GPL-2\cr }
 }
+\references{
+Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
+of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
+
+Sievers C, Schlumpf T, Sawarkar R, Comoglio F and Paro R. (2012) Mixture
+models and wavelet transforms reveal high confidence RNA-protein interaction
+sites in MOV10 PAR-CLIP data, Nucleic Acids Res. 40(20):e160. doi:
+10.1093/nar/gks697
+}
 \author{
 Federico Comoglio and Cem Sievers
 
@@ -32,14 +41,4 @@ Maintainer: Federico Comoglio
 
 \email{federico.comoglio@gmail.com}
 }
-\references{
-Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
-of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
-
-Sievers C, Schlumpf T, Sawarkar R, Comoglio F and Paro R. (2012) Mixture
-models and wavelet transforms reveal high confidence RNA-protein interaction
-sites in MOV10 PAR-CLIP data, Nucleic Acids Res. 40(20):e160. doi:
-10.1093/nar/gks697
-}
 \keyword{package}
-

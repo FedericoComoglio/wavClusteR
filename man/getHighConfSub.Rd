@@ -52,11 +52,10 @@ highConfSub <- getHighConfSub( countTable, supportStart = 0.2, supportEnd = 0.7,
 highConfSub
 
 }
-\author{
-Federico Comoglio and Cem Sievers
-}
 \seealso{
 \code{\link{getAllSub}}, \code{\link{getExpInterval}}
 }
+\author{
+Federico Comoglio and Cem Sievers
+}
 \keyword{core}
-

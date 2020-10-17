@@ -4,21 +4,16 @@
 #' Identify clusters containing high-confidence substitutions and resolve
 #' boundaries at high resolution
 #' 
-#' Identifies clusters using either the mini-rank norm (MRN) algorithm (default
-#' and recommended to achieve highest sensitivity) or via a continuous wavelet
-#' transform (CWT) based approach. The former employs thresholding of
+#' Identifies clusters using the mini-rank norm (MRN) algorithm,
+#' which employs thresholding of
 #' background coverage differences and finds the optimal cluster boundaries by
 #' exhaustively evaluating all putative clusters using a rank-based approach.
 #' This method has higher sensitivity and an approximately 10-fold faster
-#' running time than the CWT-based cluster identification algorithm. The
-#' latter, maintained for compatibility with \code{wavClusteR}, computes the
-#' CWT on a 1 kb window of the coverage function centered at a high-confidence
-#' substitution site, and identifies cluster boundaries by extending away from
-#' peak positions.
+#' running time than the CWT-based cluster identification algorithm.
 #' 
 #' 
-#' @usage getClusters(highConfSub, coverage, sortedBam, method = 'mrn', cores =
-#' 1, threshold, step = 1, snr = 3)
+#' @usage getClusters(highConfSub, coverage, sortedBam, cores =
+#' 1, threshold)
 #' @param highConfSub GRanges object containing high-confidence substitution
 #' sites as returned by the \link{getHighConfSub} function
 #' @param coverage An Rle object containing the coverage at each genomic
@@ -26,12 +21,9 @@
 #' @param sortedBam a GRanges object containing all aligned reads, including
 #' read sequence (qseq) and MD tag (MD), as returned by the
 #' \link{readSortedBam} function
-#' @param method a character, either set to "mrn" or to "cwt" to compute
-#' clusters using the mini-rank norm or the wavelet transform-based algorithm,
-#' respectively. Default is "mrn" (recommended).
 #' @param cores integer, the number of cores to be used for parallel
 #' evaluation. Default is 1.
-#' @param threshold numeric, if \code{method = "mrn"}, the difference in
+#' @param threshold numeric, the difference in
 #' coverage to be considered noise. If not specified, a Gaussian mixture model
 #' is used to learn a threshold from the data. Empirically, 10\% of the minimum
 #' coverage required at substitutions (see argument \code{minCov} in the
@@ -40,22 +32,13 @@
 #' strand-specific coverage at substitutions \eqn{m}, which can be computed
 #' using \code{summary(elementMetadata(highConfSub)[, 'coverage'])['Median']}),
 #' 10\% of \eqn{m} might represent an optimal choice.
-#' @param step numeric, if \code{method = "cwt"}, step size of window shift. If
-#' two high-confidence substitution sites are located within a distance less
-#' than \code{step}, the wavelet transform is computed only once. Default: 1,
-#' i.e. each high-confidence substitution site is considered independently.
-#' @param snr numeric, if \code{method = "cwt"}, signal-to-noise ratio
-#' controlling the peak calling as performed by \code{wavCWTPeaks} implemented
-#' in the wmtsa package. Default: 3.
 #' @return GRanges object containing the identified cluster boundaries.
 #' @note Clusters returned by this function need to be further merged by the
 #' function \code{filterClusters}, which also computes all relevant cluster
 #' statistics.
 #' @author Federico Comoglio and Cem Sievers
 #' @seealso \code{\link{getHighConfSub}}, \code{\link{filterClusters}}
-#' @references William Constantine and Donald Percival (2011), wmtsa: Wavelet
-#' Methods for Time Series Analysis,
-#' \url{http://CRAN.R-project.org/package=wmtsa}
+#' @references 
 #'
 #' Sievers C, Schlumpf T, Sawarkar R, Comoglio F and Paro R. (2012) Mixture
 #' models and wavelet transforms reveal high confidence RNA-protein interaction
@@ -76,33 +59,21 @@
 #' clusters <- getClusters( highConfSub = highConfSub, 
 #'                          coverage = coverage, 
 #'                          sortedBam = example, 
-#' 	                 method = 'mrn', 
 #' 	                 cores = 1, 
 #' 	                 threshold = 2 ) 
 #' 
 #' @export getClusters
-getClusters <- function(highConfSub, coverage, sortedBam, method = 'mrn', cores = 1, threshold, step = 1, snr = 3) {
+getClusters <- function(highConfSub, coverage, sortedBam, cores = 1, threshold) {
 # Error handling
 #   if method is not within 'coverage' or 'cwt', raise an error
 
-	stopifnot( method %in% c('mrn', 'cwt') )
-
-	if(method == 'mrn') { 
-		clusters <- getClustersMRN( highConfSub = highConfSub, 
+	clusters <- getClustersMRN( highConfSub = highConfSub, 
 					    coverage     = coverage, 
 					    sortedBam    = sortedBam,
-				            threshold    = threshold,
+				      threshold    = threshold,
 					    cores        = cores )
-		metadata( ranges( clusters ) ) <- list( 'mrn' ) #fills slot with method info
-	}
-	else {
-		clusters <- getClustersCWT( highConfSub = highConfSub, 
-					    coverage    = coverage, 
-					    step        = step, 
-					    snr         = snr,
-					    cores       = cores )
-		metadata( ranges( clusters ) ) <- list( 'cwt' ) #fills slot with method info
-	}
+	metadata( ranges( clusters ) ) <- list( 'mrn' ) #fills slot with method info
+	
 	clusters <- sort( clusters ) #sorting facilitates strand attribution
 
 	return( clusters )
@@ -349,61 +320,3 @@ getClustersMRN <- function( highConfSub, coverage, sortedBam, threshold, cores )
 			     strand   = clusters[, 4] )
 	return( clusters )
 }
-
-
-getClustersCWT <- function(highConfSub, coverage, step, snr, cores) {
-#maintained pipeline (reproducibility of wavClusteR results), see Sievers et al. (2012), Nucl Acids Res 40(2):e160
-	#backend for doMC (windows)
-	if ( suppressWarnings( require( "doMC" ) ) ) {
-		registerDoMC( cores = cores )
-     	} else {
-     	}
-
-	highConfSubSplit <- split( highConfSub, seqnames( highConfSub ) )
-	chrom <- seqlevels(highConfSub)
-	message( 'List of chromosomes in highConfSub: \n', chrom, '\n')
-	chromCov <- names( coverage )
-	message('List of chromosomes in coverage: \n', chromCov, '\n')
-    	message('Chromosomes being processed:', chrom, '\n')
-#    	clusters <- data.frame()
-	lev <- NULL; rm( lev ) #pass Rcheck
-	clusters <- foreach( lev = chrom, .combine = rbind ) %dopar% {
-#      	for(lev in chrom) {      
-      	message('chromosome being considered = ', lev, '\n')
-      	index <- which(chrom == lev)
-      	temp.gr <- highConfSubSplit[[index]]
-      	index <- which(chromCov == lev)
-      	chr.pileup <- coverage[[index]]
-      	max.pos <- length( chr.pileup )  
-      	pos.diff <- c(1, diff( start(temp.gr) ))
-      	start.vector <- c()
-      	end.vector <- c()  
-      	if(length(temp.gr) > 0) {
-		for(i in seq_len(length(temp.gr))) {  #error was at chr18 (n = 10), position = 8.
-		tryCatch({
-         		if( pos.diff[i] >= step ) {
-        			window <- c( max( 1, (start(temp.gr[i]) - 500) ), min( (start(temp.gr[i]) + 500), max.pos) ) #1kb
-         			signal <- getSignal( chr.pileup, window ) #chr.pileup = coverage of the chromosome being considered
-				len.support <- length(signal)
-				if(len.support >= 1000) {
-             				res.cwt <- wavCWT( signal )
-             				res.tree <- wavCWTTree( res.cwt, n.octave.min = 1 )
-            				res.peaks <- wavCWTPeaksCF(res.tree, snr.min = snr, noise.span = 0)
-           				if(!is.null(res.tree)) { #res.tree
-             					delta <- window[1] #start(temp.gr[i])-500
-            					for(peak in res.peaks$x) {
-         						start.vector <- c(start.vector, leftBound(peak, signal) + delta - 1)
-             						end.vector <- c(end.vector, rightBound(peak, signal) + delta - 1)
-          					}
-         				}
-         			}
-   			}
-      		}, error = function(e) print(signal))
-		}
-	}
-	cbind(rep(lev, length(start.vector)), start.vector, end.vector)
-	}
-	clusters <- GRanges(as.vector(clusters[,1]), IRanges(as.numeric(as.vector(clusters[,2])), as.numeric(as.vector(clusters[,3]))))
-return(clusters)
-}
-

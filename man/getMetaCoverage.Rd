@@ -74,8 +74,6 @@ coverage <- coverage( example )
 clusters <- getClusters( highConfSub = highConfSub, 
                          coverage = coverage, 
                          sortedBam = example, 
-	                 method = 'mrn', 
-	                 cores = 1, 
 	                 threshold = 2 ) 
 
 fclusters <- filterClusters( clusters = clusters, 
@@ -88,9 +86,6 @@ fclusters <- filterClusters( clusters = clusters,
 \dontrun{getMetaCoverage( clusters = fclusters, odds = FALSE )}
 
 }
-\author{
-Federico Comoglio
-}
 \references{
 Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for
 PAR-CLIP data analysis, submitted
@@ -98,6 +93,8 @@ PAR-CLIP data analysis, submitted
 \seealso{
 \code{\link{getClusters}}
 }
+\author{
+Federico Comoglio
+}
 \keyword{graphics}
 \keyword{postprocessing}
-

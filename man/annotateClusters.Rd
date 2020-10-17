@@ -77,9 +77,6 @@ fclusters <- filterClusters( clusters = clusters,
 \dontrun{fclusters <- annotateClusters( clusters = fclusters )}
 
 }
-\author{
-Federico Comoglio
-}
 \references{
 M. Carlson and H. Pages and P. Aboyoun and S. Falcon and M.
 Morgan and D. Sarkar and M. Lawrence, GenomicFeatures: Tools for making and
@@ -91,6 +88,8 @@ of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 \seealso{
 \code{\link{getClusters}}
 }
+\author{
+Federico Comoglio
+}
 \keyword{graphics}
 \keyword{postprocessing}
-

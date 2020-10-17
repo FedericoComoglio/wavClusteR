@@ -40,9 +40,6 @@ importFrom(ggplot2, xlab)
 importFrom(ggplot2, ylab)
 importFrom(ggplot2, geom_smooth)
 
-importFrom(wmtsa, wavCWT)
-importFrom(wmtsa, wavCWTTree)
-
 importFrom(Hmisc, dotchart2)
 
 importFrom(seqinr, write.fasta)

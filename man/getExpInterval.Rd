@@ -53,9 +53,6 @@ support <- getExpInterval( model = model, leftProb = 0.2, rightProb = 0.7, plot 
 support
 
 }
-\author{
-Federico Comoglio and Cem Sievers
-}
 \references{
 Sievers C, Schlumpf T, Sawarkar R, Comoglio F and Paro R. (2012) Mixture
 models and wavelet transforms reveal high confidence RNA-protein interaction
@@ -69,6 +66,8 @@ of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 \code{\link{fitMixtureModel}} \code{\link{getHighConfSub}}
 \code{\link{estimateFDR}}
 }
+\author{
+Federico Comoglio and Cem Sievers
+}
 \keyword{core}
 \keyword{graphics}
-

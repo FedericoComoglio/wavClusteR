@@ -35,13 +35,12 @@ filename <- system.file( "extdata", "example.bam", package = "wavClusteR" )
 sortedBam <- readSortedBam( filename = filename )
 
 }
-\author{
-Federico Comoglio
-}
 \references{
 Martin Morgan and Herve Pages, Rsamtools: Binary alignment
 (BAM), variant call (BCF), or tabix file import,
 \url{http://bioconductor.org/packages/release/bioc/html/Rsamtools.html}
 }
+\author{
+Federico Comoglio
+}
 \keyword{Import}
-

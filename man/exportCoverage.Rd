@@ -23,4 +23,3 @@ Export coverage as BigWig track, compatible with the UCSC genome browser
 Federico Comoglio
 }
 \keyword{postprocessing}
-

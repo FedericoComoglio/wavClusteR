@@ -31,11 +31,10 @@ genome browser
 Substitutions are color coded according to their strand information
 (red for the plus strand, blue for the minus strand).
 }
-\author{
-Federico Comoglio
-}
 \seealso{
 \code{\link{getHighConfSub}}
 }
+\author{
+Federico Comoglio
+}
 \keyword{postprocessing}
-

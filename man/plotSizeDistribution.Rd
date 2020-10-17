@@ -35,9 +35,7 @@ coverage <- coverage( example )
 clusters <- getClusters( highConfSub = highConfSub, 
                          coverage = coverage, 
                          sortedBam = example, 
-	                 method = 'mrn', 
-	                 cores = 1, 
-	                 threshold = 2 ) 
+	                        threshold = 2 ) 
 
 fclusters <- filterClusters( clusters = clusters, 
 		             highConfSub = highConfSub, 
@@ -49,12 +47,11 @@ fclusters <- filterClusters( clusters = clusters,
 plotSizeDistribution(fclusters, breaks = 30, col = 'skyblue2')
 
 }
-\author{
-Federico Comoglio
-}
 \seealso{
 \code{\link{getClusters}}
 }
+\author{
+Federico Comoglio
+}
 \keyword{graphics}
 \keyword{postprocessing}
-

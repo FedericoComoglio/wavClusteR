@@ -43,12 +43,11 @@ str( model )
 getExpInterval( model, bayes = TRUE, plot = TRUE )
 
 }
-\author{
-Federico Comoglio and Cem Sievers
-}
 \seealso{
 \code{\link{getAllSub}} \code{\link{getExpInterval}}
 }
+\author{
+Federico Comoglio and Cem Sievers
+}
 \keyword{core}
 \keyword{model}
-

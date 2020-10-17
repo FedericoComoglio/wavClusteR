@@ -201,8 +201,6 @@ getMetaTSS <- function( sortedBam, txDB = NULL, upstream = 1e3, downstream = 1e3
 #' clusters <- getClusters( highConfSub = highConfSub, 
 #'                          coverage = coverage, 
 #'                          sortedBam = example, 
-#' 	                 method = 'mrn', 
-#' 	                 cores = 1, 
 #' 	                 threshold = 2 ) 
 #' 
 #' fclusters <- filterClusters( clusters = clusters, 
@@ -390,8 +388,6 @@ getMetaGene <- function( clusters, txDB = NULL, upstream = 1e3, downstream = 1e3
 #' clusters <- getClusters( highConfSub = highConfSub, 
 #'                          coverage = coverage, 
 #'                          sortedBam = example, 
-#' 	                 method = 'mrn', 
-#' 	                 cores = 1, 
 #' 	                 threshold = 2 ) 
 #' 
 #' fclusters <- filterClusters( clusters = clusters, 

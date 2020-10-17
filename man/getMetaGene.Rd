@@ -71,8 +71,6 @@ coverage <- coverage( example )
 clusters <- getClusters( highConfSub = highConfSub, 
                          coverage = coverage, 
                          sortedBam = example, 
-	                 method = 'mrn', 
-	                 cores = 1, 
 	                 threshold = 2 ) 
 
 fclusters <- filterClusters( clusters = clusters, 
@@ -85,12 +83,6 @@ fclusters <- filterClusters( clusters = clusters,
 \dontrun{meta <- getMetaGene( clusters = fclusters )}
 
 }
-\author{
-Federico Comoglio
-
-Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
-of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
-}
 \references{
 Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for
 PAR-CLIP data analysis, submitted
@@ -98,6 +90,11 @@ PAR-CLIP data analysis, submitted
 \seealso{
 \code{\link{getClusters}}
 }
+\author{
+Federico Comoglio
+
+Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
+of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
+}
 \keyword{graphics}
 \keyword{postprocessing}
-

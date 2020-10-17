@@ -25,4 +25,3 @@ identifying binding sites of RNA-binding proteins. Nat Methods (2011) vol. 8
 \code{\link{fitMixtureModel}}
 }
 \keyword{datasets}
-

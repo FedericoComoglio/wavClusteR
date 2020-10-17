@@ -63,9 +63,6 @@ example <- readSortedBam( filename = filename )
 \dontrun{tss <- getMetaTSS( sortedBam = example )}
 
 }
-\author{
-Federico Comoglio
-}
 \references{
 Comoglio F*, Sievers C* and Paro R, wavClusteR: an R package for
 PAR-CLIP data analysis, submitted
@@ -73,6 +70,8 @@ PAR-CLIP data analysis, submitted
 \seealso{
 \code{\link{readSortedBam}}
 }
+\author{
+Federico Comoglio
+}
 \keyword{graphics}
 \keyword{postprocessing}
-

@@ -20,11 +20,10 @@ A FASTA file containing the cluster sequences
 Export cluster sequences for motif search analysis (FASTA format), e.g.
 using MEME-ChIP
 }
-\author{
-Federico Comoglio
-}
 \seealso{
 \code{\link{filterClusters}}
 }
+\author{
+Federico Comoglio
+}
 \keyword{postprocessing}
-

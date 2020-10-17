@@ -54,14 +54,13 @@ For details on the FDR computation, please see Comoglio, Sievers and Paro.
 The approach used to compute the upper bound for the FDR is very
 conservative. See supplementary information in Comoglio et al. for details.
 }
-\author{
-Federico Comoglio and Cem Sievers
-}
 \seealso{
 \code{\link{readSortedBam}}, \code{\link{getAllSub}}
 Comoglio F, Sievers C and Paro R (2015) Sensitive and highly resolved identification
 of RNA-protein interaction sites in PAR-CLIP data, BMC Bioinformatics 16, 32.
 }
+\author{
+Federico Comoglio and Cem Sievers
+}
 \keyword{core}
 \keyword{graphics}
-
