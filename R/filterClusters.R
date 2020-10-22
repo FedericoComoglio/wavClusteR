@@ -196,7 +196,6 @@ computelogOdds <- function( model ) {
 #' clusters <- getClusters( highConfSub = highConfSub, 
 #'                          coverage = coverage, 
 #'                          sortedBam = example, 
-#' 	                 method = 'mrn', 
 #' 	                 cores = 1, 
 #' 	                 threshold = 2 ) 
 #' 
@@ -214,10 +213,9 @@ filterClusters <- function( clusters, highConfSub, coverage, model, genome, refB
 # Error handling
 #   if method is not within 'coverage' or 'cwt', raise an error
 	method <- metadata( ranges( clusters ) )[[1]] #slot is a list
-	stopifnot( method %in% c( 'mrn', 'cwt' ) )
+	stopifnot( method %in% c( 'mrn' ) )
 
-	if( method == 'mrn' ) 
-		clusters <- filterClustersMRN( clusters     = clusters, 
+	clusters <- filterClustersMRN( clusters     = clusters, 
 					      highConfSub  = highConfSub, 
 					      coverage     = coverage, 
 					      model        = model, 
@@ -225,14 +223,6 @@ filterClusters <- function( clusters, highConfSub, coverage, model, genome, refB
 					      refBase      = refBase, 
 					      minWidth     = minWidth, 
 					      verbose      = verbose )
-	else
-		clusters <- filterClustersCWT( clusters     = clusters, 
-					      highConfSub  = highConfSub, 
-					      coverage     = coverage, 
-					      model        = model, 
-					      genome       = genome, 
-					      refBase      = refBase, 
-					      minWidth     = minWidth )
 
 	return( clusters )
 }

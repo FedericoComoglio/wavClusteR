@@ -60,7 +60,6 @@
 #' clusters <- getClusters( highConfSub = highConfSub, 
 #'                          coverage = coverage, 
 #'                          sortedBam = example, 
-#' 	                 method = 'mrn', 
 #' 	                 cores = 1, 
 #' 	                 threshold = 2 ) 
 #' 
