@@ -21,7 +21,8 @@ Imports:
     mclust,
     rtracklayer (>= 1.39.7),
     seqinr,
-    stringr
+    stringr,
+    txdbmaker
 Suggests:
     BiocStyle,
     knitr,
