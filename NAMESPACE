@@ -19,7 +19,6 @@ importFrom(foreach, "%dopar%")
 
 importFrom(rtracklayer, export)
 
-importFrom(GenomicFeatures, makeTxDbFromUCSC)
 importFrom(GenomicFeatures, cdsBy)
 importFrom(GenomicFeatures, genes)
 importFrom(GenomicFeatures, intronsByTranscript)
@@ -50,6 +49,7 @@ importFrom(Rsamtools, ScanBamParam)
 importFrom(Rsamtools, scanBam)
 
 importFrom(txdbmaker, supportedUCSCtables)
+importFrom(txdbmaker, makeTxDbFromUCSC)
 
 export( 
 	readSortedBam,
